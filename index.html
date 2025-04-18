@@ -1,0 +1,2918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>ROBOTCYB</title>
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+	<!-- Add Three.js library -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+	<style>
+		#cyberCanvas {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 0;
+			width: 100vw;
+			height: 100vh;
+			pointer-events: none;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+			background: black;
+			font-family: 'Orbitron', sans-serif;
+			color: #00ff00;
+			overflow: hidden;
+		}
+
+		canvas {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			width: 100vw;
+			height: 100vh;
+			pointer-events: none;
+		}
+
+		.content {
+			position: relative;
+			z-index: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: flex-start;
+			min-height: 100vh;
+			padding: 50px;
+			box-sizing: border-box;
+			margin-top: 50px;
+		}
+
+		h1 {
+			font-size: 4em;
+			margin: 0.5em 0;
+			text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+			position: relative;
+		}
+
+		h1::after {
+			content: "ROBOTCYB";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			color: rgba(0, 255, 0, 0.3);
+			z-index: -1;
+			text-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+			transform: scale(1.05);
+		}
+
+		p {
+			font-size: 1.4em;
+			max-width: 800px;
+			margin: 0 auto 2em;
+			text-align: center;
+			line-height: 1.6;
+		}
+
+		.links,
+		.security-links,
+		.buy-links,
+		.market-links {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 15px;
+		}
+
+		.links a,
+		.security-links a,
+		.buy-links a,
+		.market-links a {
+			color: #00ff00;
+			background: rgba(0, 0, 0, 0.6);
+			padding: 8px 16px;
+			border: 1px solid #00ff00;
+			border-radius: 2px;
+			text-decoration: none;
+			font-weight: 500;
+			font-size: 12px;
+			transition: all 0.2s ease;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.links a:hover,
+		.security-links a:hover,
+		.buy-links a:hover,
+		.market-links a:hover {
+			background: rgba(0, 255, 0, 0.05);
+			color: #ffffff;
+			transform: translateY(-1px);
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+		}
+
+		.links a:active,
+		.security-links a:active,
+		.buy-links a:active,
+		.market-links a:active {
+			transform: translateY(1px);
+			box-shadow: 0 0 3px rgba(0, 255, 0, 0.1);
+		}
+
+		.social-links {
+			position: fixed;
+			bottom: 30px;
+			left: 30px;
+			z-index: 10;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		.social-links a {
+			color: #00ff00;
+			text-decoration: none;
+			font-size: 14px;
+			padding: 8px;
+			border: 1px solid #00ff00;
+			border-radius: 2px;
+			width: 32px;
+			height: 32px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.2s ease;
+			background: rgba(0, 0, 0, 0.6);
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
+		}
+
+		.social-links a:hover {
+			background: rgba(0, 255, 0, 0.05);
+			transform: scale(1.05);
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+		}
+
+		.security-links {
+			position: fixed;
+			top: 15px;
+			left: 15px;
+			z-index: 10;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+
+		.security-links a {
+			color: #00ff00;
+			background: rgba(0, 0, 0, 0.6);
+			padding: 4px 8px;
+			border: 1px solid #00ff00;
+			border-radius: 2px;
+			text-decoration: none;
+			font-weight: 500;
+			font-size: 10px;
+			transition: all 0.2s ease;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
+			position: relative;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
+		.security-links a:hover {
+			background: rgba(0, 255, 0, 0.05);
+			color: #ffffff;
+			transform: translateY(-1px);
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+		}
+
+		.buy-links {
+			position: fixed;
+			top: 30px;
+			right: 30px;
+			z-index: 10;
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+		}
+
+		.market-links {
+			position: fixed;
+			bottom: 30px;
+			right: 30px;
+			z-index: 10;
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+		}
+
+		.market-links h3 {
+			color: #00ff00;
+			font-size: 14px;
+			margin-bottom: 8px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-weight: 500;
+		}
+
+		.toast {
+			position: fixed;
+			top: 30px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: rgba(0, 255, 0, 0.9);
+			color: black;
+			padding: 15px 30px;
+			border-radius: 8px;
+			font-weight: bold;
+			font-size: 16px;
+			display: none;
+			z-index: 100;
+			box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+		}
+
+		/* Oracle AI Assistant Styles */
+		.oracle-button {
+			display: none;
+		}
+
+		.oracle-popup {
+			display: none;
+			position: fixed;
+			bottom: 20px;
+			left: 20px;
+			width: 400px;
+			height: 600px;
+			background: rgba(0, 0, 0, 0.9);
+			border: 1px solid rgba(0, 255, 0, 0.3);
+			border-radius: 10px;
+			z-index: 1000;
+			overflow: hidden;
+			backdrop-filter: blur(10px);
+			box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+		}
+
+		.oracle-chat {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			padding: 20px;
+			color: #00ff00;
+			font-family: 'Courier New', monospace;
+		}
+
+		.oracle-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 20px;
+			padding-bottom: 10px;
+			border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+		}
+
+		.oracle-title {
+			font-size: 1.2em;
+			font-weight: bold;
+		}
+
+		.oracle-modes {
+			display: flex;
+			gap: 10px;
+			margin-bottom: 20px;
+		}
+
+		.oracle-mode {
+			padding: 5px 10px;
+			background: rgba(0, 255, 0, 0.1);
+			border: 1px solid rgba(0, 255, 0, 0.3);
+			border-radius: 5px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.oracle-mode:hover {
+			background: rgba(0, 255, 0, 0.2);
+		}
+
+		.oracle-mode.active {
+			background: rgba(0, 255, 0, 0.3);
+		}
+
+		.oracle-messages {
+			flex-grow: 1;
+			overflow-y: auto;
+			margin-bottom: 20px;
+			padding-right: 10px;
+		}
+
+		.oracle-message {
+			margin-bottom: 15px;
+			opacity: 0;
+			transform: translateY(20px);
+			animation: messageAppear 0.5s forwards;
+		}
+
+		@keyframes messageAppear {
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.oracle-input {
+			display: flex;
+			gap: 10px;
+		}
+
+		.oracle-input input {
+			flex-grow: 1;
+			background: rgba(0, 255, 0, 0.1);
+			border: 1px solid rgba(0, 255, 0, 0.3);
+			border-radius: 5px;
+			padding: 10px;
+			color: #00ff00;
+			font-family: 'Courier New', monospace;
+		}
+
+		.oracle-input button {
+			background: rgba(0, 255, 0, 0.2);
+			border: 1px solid rgba(0, 255, 0, 0.3);
+			border-radius: 5px;
+			padding: 10px 20px;
+			color: #00ff00;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.oracle-input button:hover {
+			background: rgba(0, 255, 0, 0.3);
+		}
+
+		.oracle-close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			background: none;
+			border: none;
+			color: #00ff00;
+			cursor: pointer;
+			font-size: 1.2em;
+			opacity: 0.7;
+			transition: opacity 0.3s ease;
+		}
+
+		.oracle-close:hover {
+			opacity: 1;
+		}
+
+		#toggleMusic {
+			display: none;
+		}
+
+		@media (max-width: 1200px) {
+			h1 {
+				font-size: 3.5em;
+			}
+
+			p {
+				font-size: 1.2em;
+				max-width: 600px;
+			}
+
+			.links a,
+			.security-links a,
+			.buy-links a,
+			.market-links a {
+				padding: 12px 24px;
+				font-size: 14px;
+			}
+		}
+
+		@media (max-width: 768px) {
+			h1 {
+				font-size: 2.5em;
+			}
+
+			p {
+				font-size: 1em;
+				max-width: 90%;
+			}
+
+			.social-links {
+				bottom: 15px;
+				left: 15px;
+			}
+
+			.security-links {
+				top: 10px;
+				left: 10px;
+				gap: 6px;
+			}
+
+			.buy-links {
+				top: 15px;
+				right: 15px;
+			}
+
+			.market-links {
+				bottom: 15px;
+				right: 15px;
+			}
+
+			.oracle-button {
+				bottom: 15px;
+				left: 15px;
+				padding: 8px 16px;
+				font-size: 12px;
+			}
+
+			#toggleMusic.visible {
+				bottom: 15px;
+			}
+
+			.sliding-panel {
+				width: 140px;
+				height: 60px;
+			}
+
+			.sliding-panel-toggle {
+				height: 60px;
+				font-size: 9px;
+			}
+
+			.links a,
+			.security-links a,
+			.buy-links a,
+			.market-links a {
+				padding: 6px 12px;
+				font-size: 11px;
+			}
+
+			.social-links a {
+				width: 28px;
+				height: 28px;
+				font-size: 12px;
+			}
+
+			.security-links a {
+				padding: 3px 6px;
+				font-size: 9px;
+			}
+
+			.oracle-popup {
+				width: 300px;
+				height: 500px;
+				left: 15px;
+			}
+		}
+
+		/* Add styles for the sliding panel */
+		.sliding-panel {
+			display: none;
+		}
+
+		.sliding-panel-toggle {
+			display: none;
+		}
+
+		/* Update styles for the Community Sentiment component */
+		.sentiment-container {
+			position: fixed;
+			top: 50%;
+			right: 30px;
+			transform: translateY(-50%);
+			width: 200px;
+			background: rgba(0, 0, 0, 0.6);
+			border: 1px solid #00ff00;
+			border-radius: 2px;
+			padding: 10px;
+			z-index: 10;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.1);
+		}
+
+		.sentiment-title {
+			color: #00ff00;
+			font-size: 12px;
+			margin-bottom: 8px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-weight: 500;
+			position: relative;
+			cursor: help;
+		}
+
+		.sentiment-title:hover::after {
+			content: "Community Sentiment";
+			position: absolute;
+			bottom: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			background: rgba(0, 0, 0, 0.8);
+			color: #00ff00;
+			padding: 4px 8px;
+			border-radius: 2px;
+			font-size: 10px;
+			white-space: nowrap;
+			z-index: 100;
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
+		}
+
+		.sentiment-bar-container {
+			width: 100%;
+			height: 6px;
+			background: rgba(0, 0, 0, 0.5);
+			border: 1px solid #00ff00;
+			border-radius: 1px;
+			position: relative;
+			overflow: hidden;
+			margin-bottom: 8px;
+		}
+
+		.sentiment-bar {
+			height: 100%;
+			width: 50%;
+			background: linear-gradient(90deg, #8B4513, #00ff00);
+			position: absolute;
+			left: 0;
+			transition: width 0.5s ease, left 0.5s ease;
+		}
+
+		.sentiment-buttons {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			gap: 10px;
+		}
+
+		.sentiment-button {
+			background: rgba(0, 0, 0, 0.6);
+			border: 1px solid #00ff00;
+			color: #00ff00;
+			padding: 4px 8px;
+			border-radius: 2px;
+			cursor: pointer;
+			font-size: 12px;
+			transition: all 0.2s ease;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-width: 30px;
+			flex: 1;
+		}
+
+		.sentiment-button:hover {
+			background: rgba(0, 255, 0, 0.1);
+			transform: translateY(-1px);
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
+		}
+
+		.sentiment-button:active {
+			transform: translateY(1px);
+		}
+
+		.sentiment-stats {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			margin-top: 5px;
+			font-size: 9px;
+			color: #00ff00;
+		}
+
+		.sentiment-close {
+			display: none;
+			/* Hide the close button */
+		}
+
+		@media (max-width: 768px) {
+			.sentiment-container {
+				width: 150px;
+				padding: 8px;
+				right: 15px;
+			}
+
+			.sentiment-title {
+				font-size: 10px;
+			}
+
+			.sentiment-bar-container {
+				height: 4px;
+			}
+
+			.sentiment-button {
+				padding: 3px 6px;
+				font-size: 10px;
+				min-width: 25px;
+			}
+
+			.sentiment-stats {
+				font-size: 8px;
+			}
+		}
+
+		/* Remove music toggle styles and add theme toggle styles */
+		#themeToggle {
+			position: fixed;
+			bottom: 30px;
+			left: calc(50% - 60px);
+			/* Position it to the left of the ambient toggle */
+			transform: translateX(-50%);
+			background: rgba(0, 0, 0, 0.6);
+			color: #00ff00;
+			border: 1px solid #00ff00;
+			padding: 6px 12px;
+			border-radius: 2px;
+			cursor: pointer;
+			font-family: 'Orbitron', sans-serif;
+			font-weight: 500;
+			font-size: 12px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			transition: all 0.2s ease;
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
+			z-index: 10;
+		}
+
+		#themeToggle:hover {
+			background: rgba(0, 255, 0, 0.05);
+			color: #ffffff;
+			transform: translateX(-50%) translateY(-1px);
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+		}
+
+		#themeToggle:active {
+			transform: translateX(-50%) translateY(1px);
+		}
+
+		@media (max-width: 768px) {
+			#themeToggle {
+				bottom: 15px;
+				left: calc(50% - 45px);
+				/* Adjust for mobile */
+				font-size: 10px;
+				padding: 4px 8px;
+			}
+		}
+
+		body.light-theme {
+			background: #1a1a1a;
+			color: #ff00cc;
+		}
+
+		body.light-theme .content h1,
+		body.light-theme .content p,
+		body.light-theme .links a,
+		body.light-theme .security-links a,
+		body.light-theme .buy-links a,
+		body.light-theme .market-links a {
+			color: #ff00cc;
+			border-color: #ff00cc;
+			text-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
+		}
+
+		body.light-theme .links a:hover,
+		body.light-theme .security-links a:hover,
+		body.light-theme .buy-links a:hover,
+		body.light-theme .market-links a:hover {
+			background: rgba(255, 0, 204, 0.1);
+			box-shadow: 0 0 15px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .social-links a {
+			background: rgba(26, 26, 26, 0.8);
+			border: 1px solid #ff00cc;
+			box-shadow: 0 0 5px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .social-links a:hover {
+			background: rgba(255, 0, 204, 0.1);
+			box-shadow: 0 0 10px rgba(255, 0, 204, 0.5),
+				0 0 20px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .toast {
+			background: rgba(26, 26, 26, 0.9);
+			border: 1px solid #ff00cc;
+			box-shadow: 0 0 10px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .toast.success {
+			border-color: #ff00cc;
+		}
+
+		body.light-theme .toast.error {
+			border-color: #ff0066;
+		}
+
+		body.light-theme .toast-message {
+			color: #ffffff;
+		}
+
+		body.light-theme .toast-close {
+			color: #ff00cc;
+		}
+
+		body.light-theme .toast-close:hover {
+			color: #ffffff;
+			text-shadow: 0 0 5px rgba(255, 0, 204, 0.5);
+		}
+
+		body.light-theme .theme-toggle {
+			background: rgba(26, 26, 26, 0.8);
+			color: #ff00cc;
+			border: 1px solid #ff00cc;
+			box-shadow: 0 0 5px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .theme-toggle:hover {
+			background: rgba(255, 0, 204, 0.1);
+			color: #ffffff;
+			box-shadow: 0 0 10px rgba(255, 0, 204, 0.5),
+				0 0 20px rgba(255, 0, 204, 0.3);
+		}
+
+		/* Community Sentiment Light Theme */
+		body.light-theme .sentiment-container {
+			background: rgba(26, 26, 26, 0.8);
+			border: 1px solid #ff00cc;
+			box-shadow: 0 0 8px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .sentiment-title {
+			color: #ff00cc;
+			text-shadow: 0 0 5px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .sentiment-bar-container {
+			background: rgba(26, 26, 26, 0.8);
+			border: 1px solid #ff00cc;
+		}
+
+		body.light-theme .sentiment-bar {
+			background: linear-gradient(90deg, #ff0066, #ff00cc);
+			box-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
+		}
+
+		body.light-theme .sentiment-button {
+			background: rgba(26, 26, 26, 0.8);
+			border: 1px solid #ff00cc;
+			color: #ff00cc;
+			box-shadow: 0 0 5px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .sentiment-button:hover {
+			background: rgba(255, 0, 204, 0.1);
+			color: #ffffff;
+			box-shadow: 0 0 10px rgba(255, 0, 204, 0.5),
+				0 0 20px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .sentiment-stats {
+			color: #ff00cc;
+			text-shadow: 0 0 5px rgba(255, 0, 204, 0.3);
+		}
+
+		/* Add subtle background animation */
+		@keyframes pinkGlow {
+			0% {
+				background-position: 0% 50%;
+			}
+
+			50% {
+				background-position: 100% 50%;
+			}
+
+			100% {
+				background-position: 0% 50%;
+			}
+		}
+
+		body.light-theme::before {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(45deg,
+					rgba(255, 0, 204, 0.05),
+					rgba(255, 0, 102, 0.05),
+					rgba(255, 0, 204, 0.05));
+			background-size: 200% 200%;
+			animation: pinkGlow 15s ease infinite;
+			pointer-events: none;
+			z-index: -1;
+		}
+
+		/* Update styles for the ambient sound toggle button */
+		#ambientToggle {
+			position: fixed;
+			bottom: 30px;
+			left: calc(50% + 60px);
+			/* Position it to the right of the theme toggle */
+			transform: translateX(-50%);
+			background: rgba(0, 0, 0, 0.6);
+			color: #00ff00;
+			border: 1px solid #00ff00;
+			padding: 6px 12px;
+			border-radius: 2px;
+			cursor: pointer;
+			font-family: 'Orbitron', sans-serif;
+			font-weight: 500;
+			font-size: 12px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			transition: all 0.2s ease;
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
+			z-index: 10;
+		}
+
+		#ambientToggle:hover {
+			background: rgba(0, 255, 0, 0.05);
+			color: #ffffff;
+			transform: translateX(-50%) translateY(-1px);
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+		}
+
+		#ambientToggle:active {
+			transform: translateX(-50%) translateY(1px);
+		}
+
+		/* Light theme styles for ambient toggle */
+		body.light-theme #ambientToggle {
+			color: #ff00cc;
+			background: rgba(26, 26, 26, 0.8);
+			border: 1px solid #ff00cc;
+			box-shadow: 0 0 5px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme #ambientToggle:hover {
+			background: rgba(255, 0, 204, 0.1);
+			color: #ffffff;
+			box-shadow: 0 0 10px rgba(255, 0, 204, 0.5),
+				0 0 20px rgba(255, 0, 204, 0.3);
+		}
+
+		@media (max-width: 768px) {
+			#ambientToggle {
+				bottom: 15px;
+				left: calc(50% + 45px);
+				/* Adjust for mobile */
+				font-size: 10px;
+				padding: 4px 8px;
+			}
+		}
+
+		#oracle-canvas {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+			pointer-events: none;
+			mix-blend-mode: screen;
+		}
+
+		.oracle-core {
+			position: fixed;
+			width: 20px;
+			/* Reduced from 30px */
+			height: 20px;
+			/* Reduced from 30px */
+			background: radial-gradient(circle at center,
+					rgba(0, 255, 0, 0.3) 0%,
+					rgba(0, 255, 0, 0.15) 40%,
+					rgba(0, 255, 0, 0) 70%);
+			border-radius: 50%;
+			pointer-events: none;
+			z-index: 2;
+			mix-blend-mode: screen;
+			filter: blur(3px);
+			/* Reduced blur */
+			opacity: 0.5;
+			/* Reduced opacity */
+			transition: transform 0.1s ease-out;
+			box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+			/* Reduced glow */
+		}
+
+		#musicToggle {
+			position: fixed;
+			bottom: 15px;
+			right: 15px;
+			background: rgba(0, 0, 0, 0.6);
+			color: #00ff00;
+			border: 1px solid #00ff00;
+			padding: 8px;
+			border-radius: 2px;
+			cursor: pointer;
+			font-family: 'Orbitron', sans-serif;
+			font-size: 16px;
+			transition: all 0.3s ease;
+			z-index: 100;
+			width: 32px;
+			height: 32px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		#musicToggle:hover {
+			background: rgba(0, 255, 0, 0.1);
+			transform: scale(1.1);
+		}
+
+		body.light-theme #musicToggle {
+			color: #ff00cc;
+			border-color: #ff00cc;
+		}
+
+		/* Chat Interface Styles */
+		.chat-container {
+			position: fixed;
+			left: -150px; /* Start hidden */
+			top: 50%;
+			transform: translateY(-50%);
+			width: 150px;
+			height: 250px;
+			background: rgba(0, 0, 0, 0.8);
+			border: 1px solid #00ff00;
+			border-radius: 10px;
+			z-index: 1000;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+			box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+			transition: left 0.3s ease;
+		}
+
+		.chat-container:hover {
+			left: 20px; /* Show on hover */
+		}
+
+		/* Add a visible handle when chat is hidden */
+		.chat-container::before {
+			content: "💬";
+			position: absolute;
+			right: -30px;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 30px;
+			height: 30px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: rgba(0, 0, 0, 0.8);
+			border: 1px solid #00ff00;
+			border-radius: 5px;
+			color: #00ff00;
+			font-size: 12px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.chat-container:hover::before {
+			background: rgba(0, 255, 0, 0.1);
+		}
+
+		/* Light theme styles for chat handle */
+		body.light-theme .chat-container::before {
+			background: rgba(26, 26, 26, 0.8);
+			border-color: #ff00cc;
+			color: #ff00cc;
+		}
+
+		body.light-theme .chat-container:hover::before {
+			background: rgba(255, 0, 204, 0.1);
+		}
+
+		.chat-header {
+			padding: 8px; /* Reduced from 15px */
+			background: rgba(0, 255, 0, 0.1);
+			border-bottom: 1px solid #00ff00;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.chat-title {
+			color: #00ff00;
+			font-size: 0.9em; /* Reduced from 1.2em */
+			font-weight: bold;
+		}
+
+		.chat-messages {
+			flex-grow: 1;
+			padding: 8px; /* Reduced from 15px */
+			overflow-y: auto;
+			display: flex;
+			flex-direction: column;
+			gap: 6px; /* Reduced from 10px */
+		}
+
+		.message {
+			max-width: 80%;
+			padding: 6px; /* Reduced from 10px */
+			border-radius: 6px; /* Reduced from 10px */
+			color: #00ff00;
+			font-size: 0.7em; /* Reduced from 0.9em */
+			line-height: 1.3; /* Reduced from 1.4 */
+		}
+
+		.message.ai {
+			align-self: flex-start;
+			background: rgba(0, 255, 0, 0.1);
+			border: 1px solid rgba(0, 255, 0, 0.3);
+		}
+
+		.message.agent {
+			align-self: flex-end;
+			background: rgba(0, 255, 0, 0.2);
+			border: 1px solid rgba(0, 255, 0, 0.4);
+		}
+
+		.chat-input {
+			padding: 8px; /* Reduced from 15px */
+			background: rgba(0, 0, 0, 0.5);
+			border-top: 1px solid #00ff00;
+			display: flex;
+			gap: 6px; /* Reduced from 10px */
+		}
+
+		.chat-input input {
+			flex-grow: 1;
+			background: rgba(0, 255, 0, 0.1);
+			border: 1px solid #00ff00;
+			border-radius: 3px; /* Reduced from 5px */
+			padding: 4px; /* Reduced from 8px */
+			color: #00ff00;
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.7em; /* Added font size */
+		}
+
+		.chat-input button {
+			background: rgba(0, 255, 0, 0.2);
+			border: 1px solid #00ff00;
+			border-radius: 3px; /* Reduced from 5px */
+			padding: 4px 8px; /* Reduced from 8px 15px */
+			color: #00ff00;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-size: 0.7em; /* Added font size */
+		}
+
+		.chat-input button:hover {
+			background: rgba(0, 255, 0, 0.3);
+		}
+
+		.chat-close {
+			background: none;
+			border: none;
+			color: #00ff00;
+			cursor: pointer;
+			font-size: 1.2em;
+			
+			opacity: 0.7;
+			transition: opacity 0.3s ease;
+		}
+
+		.chat-close:hover {
+			opacity: 1;
+		}
+
+		/* Light theme styles for chat */
+		body.light-theme .chat-container {
+			background: rgba(26, 26, 26, 0.8);
+			border-color: #ff00cc;
+			box-shadow: 0 0 20px rgba(255, 0, 204, 0.2);
+		}
+
+		body.light-theme .chat-header {
+			background: rgba(255, 0, 204, 0.1);
+			border-bottom-color: #ff00cc;
+		}
+
+		body.light-theme .chat-title {
+			color: #ff00cc;
+		}
+
+		body.light-theme .message {
+			color: #ff00cc;
+		}
+
+		body.light-theme .message.ai {
+			background: rgba(255, 0, 204, 0.1);
+			border-color: rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .message.agent {
+			background: rgba(255, 0, 204, 0.2);
+			border-color: rgba(255, 0, 204, 0.4);
+		}
+
+		body.light-theme .chat-input {
+			background: rgba(26, 26, 26, 0.5);
+			border-top-color: #ff00cc;
+		}
+
+		body.light-theme .chat-input input {
+			background: rgba(255, 0, 204, 0.1);
+			border-color: #ff00cc;
+			color: #ff00cc;
+		}
+
+		body.light-theme .chat-input button {
+			background: rgba(255, 0, 204, 0.2);
+			border-color: #ff00cc;
+			color: #ff00cc;
+		}
+
+		body.light-theme .chat-input button:hover {
+			background: rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .chat-close {
+			color: #ff00cc;
+		}
+
+		/* Add donation button styles */
+		.donation-button {
+			position: fixed;
+			bottom: 30px;
+			left: 80px; /* Changed from 50px to 80px to move away from X icon */
+			background: rgba(0, 0, 0, 0.6);
+			color: #00ff00;
+			border: 1px solid #00ff00;
+			padding: 6px 13px;
+			border-radius: 2px;
+			cursor: pointer;
+			font-family: 'Orbitron', sans-serif;
+			font-size: 10px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			transition: all 0.3s ease;
+			z-index: 1000;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.donation-button:hover {
+			background: rgba(0, 255, 0, 0.1);
+			transform: translateY(-1px);
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+		}
+
+		.donation-panel {
+			position: fixed;
+			bottom: 80px;
+			left: 80px; /* Changed from 50px to 80px to move away from X icon */
+			background: rgba(0, 0, 0, 0.9);
+			border: 1px solid #00ff00;
+			border-radius: 2px;
+			padding: 12px;
+			width: 240px;
+			display: none;
+			z-index: 1000;
+			box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+		}
+
+		.donation-panel.active {
+			display: block;
+		}
+
+		.donation-title {
+			color: #00ff00;
+			font-size: 12px;
+			margin-bottom: 8px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		.wallet-address {
+			background: rgba(0, 255, 0, 0.1);
+			border: 1px solid rgba(0, 255, 0, 0.3);
+			padding: 6px;
+			margin-bottom: 6px;
+			font-size: 9px;
+			word-break: break-all;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.wallet-address span {
+			color: #00ff00;
+		}
+
+		.copy-button {
+			background: none;
+			border: 1px solid #00ff00;
+			color: #00ff00;
+			padding: 1px 5px;
+			font-size: 8px;
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+
+		.copy-button:hover {
+			background: rgba(0, 255, 0, 0.1);
+		}
+
+		/* Light theme styles for donation */
+		body.light-theme .donation-button {
+			color: #ff00cc;
+			border-color: #ff00cc;
+		}
+
+		body.light-theme .donation-button:hover {
+			background: rgba(255, 0, 204, 0.1);
+			box-shadow: 0 0 8px rgba(255, 0, 204, 0.2);
+		}
+
+		body.light-theme .donation-panel {
+			background: rgba(26, 26, 26, 0.9);
+			border-color: #ff00cc;
+			box-shadow: 0 0 20px rgba(255, 0, 204, 0.2);
+		}
+
+		body.light-theme .donation-title {
+			color: #ff00cc;
+		}
+
+		body.light-theme .wallet-address {
+			background: rgba(255, 0, 204, 0.1);
+			border-color: rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .wallet-address span {
+			color: #ff00cc;
+		}
+
+		body.light-theme .copy-button {
+			border-color: #ff00cc;
+			color: #ff00cc;
+		}
+
+		body.light-theme .copy-button:hover {
+			background: rgba(255, 0, 204, 0.1);
+		}
+
+		@media (max-width: 768px) {
+			.donation-button {
+				bottom: 15px;
+				left: 65px; /* Changed from 35px to 65px to move away from X icon */
+				padding: 5px 10px;
+				font-size: 8px;
+			}
+
+			.donation-panel {
+				bottom: 65px;
+				left: 65px; /* Changed from 35px to 65px to move away from X icon */
+				width: 200px;
+				padding: 8px;
+			}
+
+			.donation-title {
+				font-size: 10px;
+			}
+
+			.wallet-address {
+				padding: 5px;
+				font-size: 8px;
+			}
+
+			.copy-button {
+				padding: 1px 3px;
+				font-size: 7px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<canvas id="cyberCanvas"></canvas>
+	<div class="content">
+		<h1>ROBOTCYB</h1>
+		<p>frontier of AGE in the age of singularity</p>
+	</div>
+
+	<!-- Chat Interface -->
+	<div class="chat-container">
+		<div class="chat-header">
+			<div class="chat-title">🤖 Agent Chat</div>
+			<button class="chat-close">×</button>
+	</div>
+		<div class="chat-messages">
+			<div class="message ai">Hello! I'm your agent. How can I help you today?</div>
+	</div>
+		<div class="chat-input">
+			<input type="text" placeholder="Type your message...">
+			<button>Send</button>
+		</div>
+	</div>
+
+	<div class="security-links">
+		<a href="https://gopluslabs.io/token-security/solana/8WZiguAp8NyFnwm8Z97k6sCbSRCWaW1YYXKeCTpupump"
+			target="_blank">🔐 Token Security Check</a>
+		<a href="https://rugcheck.xyz/tokens/8WZiguAp8NyFnwm8Z97k6sCbSRCWaW1YYXKeCTpupump" target="_blank">🔎
+			RugCheck</a>
+		<a href="https://github.com/c1cad4/robotcyb" target="_blank">🔗 View ROBOTCYB on GitHub</a>
+	</div>
+
+	<div class="buy-links">
+		<h3>Buy ROBOTCYB</h3>
+		<a href="https://gmgn.ai/sol/token/8WZiguAp8NyFnwm8Z97k6sCbSRCWaW1YYXKeCTpupump" target="_blank">Buy on GMGN</a>
+		<a href="https://web3.okx.com/ru/token/solana/8WZiguAp8NyFnwm8Z97k6sCbSRCWaW1YYXKeCTpupump" target="_blank">Buy
+			on OKX</a>
+		<a href="https://www.mexc.com/ru-RU/dex/trade?pair_ca=6pQd4VkSN35X4MGNPHjPbA6KgF8zxGj9K7cUkfNCjKHP&chain_id=100000&token_ca=8WZiguAp8NyFnwm8Z97k6sCbSRCWaW1YYXKeCTpupump&base_token_ca=So11111111111111111111111111111111111111112"
+			target="_blank">Buy on MEXC</a>
+	</div>
+
+	<div class="market-links">
+		<h3>Market Data</h3>
+		<a href="https://dexscreener.com/solana/6pqd4vksn35x4mgnphjpba6kgf8zxgj9k7cukfncjkhp"
+			target="_blank">DexScreener</a>
+		<a href="https://www.geckoterminal.com/solana/pools/6pQd4VkSN35X4MGNPHjPbA6KgF8zxGj9K7cUkfNCjKHP"
+			target="_blank">GeckoTerminal</a>
+	</div>
+
+	<div class="social-links">
+		<a href="https://t.me/robotcyb" target="_blank">TG</a>
+		<a href="https://x.com/robot_cyb" target="_blank">X</a>
+	</div>
+
+	<div class="toast" id="walletToast">✅ Wallet Connected</div>
+
+	<!-- Audio elements -->
+	<audio id="clickSound" preload="auto">
+		<source src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3" type="audio/mpeg">
+	</audio>
+	<audio id="hoverSound" preload="auto">
+		<source src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3" type="audio/mpeg">
+	</audio>
+	<audio id="ambientSound" loop preload="auto">
+		<source src="https://assets.mixkit.co/active_storage/sfx/123/123-preview.mp3" type="audio/mpeg">
+	</audio>
+
+	<!-- Theme toggle button -->
+	<button id="themeToggle">🌓</button>
+
+	<!-- Community Sentiment component -->
+	<div class="sentiment-container" id="sentimentContainer">
+		<div class="sentiment-title">CS</div>
+		<div class="sentiment-bar-container">
+			<div class="sentiment-bar" id="sentimentBar"></div>
+		</div>
+		<div class="sentiment-buttons">
+			<button class="sentiment-button" id="negativeBtn">💩</button>
+			<button class="sentiment-button" id="positiveBtn">🚀</button>
+		</div>
+		<div class="sentiment-stats">
+			<span id="negativeCount">0</span>
+			<span id="positiveCount">0</span>
+		</div>
+	</div>
+
+	<!-- Ambient sound toggle button -->
+	<button id="ambientToggle">🌌</button>
+
+	<div class="oracle-popup">
+		<button class="oracle-close">×</button>
+		<div class="oracle-chat">
+			<div class="oracle-header">
+				<div class="oracle-title">🤖 RobotCyb Oracle</div>
+			</div>
+			<div class="oracle-modes">
+				<div class="oracle-mode active" data-mode="prophet">🔮 Prophet</div>
+				<div class="oracle-mode" data-mode="lab">🧪 Lab</div>
+				<div class="oracle-mode" data-mode="action">🔥 Action</div>
+			</div>
+			<div class="oracle-messages"></div>
+			<div class="oracle-input">
+				<input type="text" placeholder="Ask RobotCyb...">
+				<button>Send</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Add donation button and panel -->
+	<button class="donation-button" id="donationButton">
+		💰 Support RobotCyb
+	</button>
+	<div class="donation-panel" id="donationPanel">
+		<div class="donation-title">💰 Support RobotCyb's Development</div>
+		<div class="wallet-address">
+			<span>robotcyb</span>
+			<button class="copy-button" data-address="ARxc7VD9vXBWLtrRxEGyM3cwRPmqxcWu6s9gjgUvzwwP">Copy</button>
+		</div>
+		<div class="wallet-address">
+			<span>sol</span>
+			<button class="copy-button" data-address="ARxc7VD9vXBWLtrRxEGyM3cwRPmqxcWu6s9gjgUvzwwP">Copy</button>
+		</div>
+		<div class="wallet-address">
+			<span>boot</span>
+			<button class="copy-button" data-address="bostrom1fc5czgfd500s7ur6tw75yvfztqg0zrgw6tq3xq">Copy</button>
+		</div>
+	</div>
+
+	<script>
+		// Audio Manager
+	class AudioManager {
+		constructor() {
+			this.clickSound = document.getElementById('clickSound');
+			this.hoverSound = document.getElementById('hoverSound');
+			this.ambientSound = document.getElementById('ambientSound');
+			this.ambientToggle = document.getElementById('ambientToggle');
+			
+			this.isAmbientEnabled = localStorage.getItem('ambientEnabled') === 'true';
+			this.initializeAudio();
+		}
+
+		initializeAudio() {
+			// Set volumes
+			if (this.clickSound) this.clickSound.volume = 0.3;
+			if (this.hoverSound) this.hoverSound.volume = 0.2;
+			if (this.ambientSound) this.ambientSound.volume = 0.1;
+			
+			// Initialize ambient sound state
+			if (this.isAmbientEnabled && this.ambientToggle) {
+				this.ambientToggle.textContent = '🚫🌌';
+				if (this.ambientSound) {
+					this.ambientSound.play().catch(error => {
+						console.log("Audio autoplay prevented:", error);
+					});
+				}
+			}
+			
+			// Add click event listener to enable audio
+			document.addEventListener('click', () => {
+				if (this.isAmbientEnabled && this.ambientSound) {
+					this.ambientSound.play().catch(() => {});
+				}
+			}, { once: true });
+		}
+
+		playClickSound() {
+			if (this.clickSound) {
+				this.clickSound.currentTime = 0;
+				this.clickSound.play().catch(() => {});
+			}
+		}
+
+		playHoverSound() {
+			if (this.hoverSound) {
+				this.hoverSound.currentTime = 0;
+				this.hoverSound.play().catch(() => {});
+			}
+		}
+
+		toggleAmbient() {
+			this.isAmbientEnabled = !this.isAmbientEnabled;
+			
+			if (this.ambientSound && this.ambientToggle) {
+				if (this.isAmbientEnabled) {
+					this.ambientSound.play().catch(error => {
+						console.log("Audio play failed:", error);
+					});
+					this.ambientToggle.textContent = '🚫🌌';
+				} else {
+					this.ambientSound.pause();
+					this.ambientToggle.textContent = '🌌';
+				}
+			}
+			
+			localStorage.setItem('ambientEnabled', this.isAmbientEnabled);
+			this.playClickSound();
+		}
+	}
+
+	// Theme Manager
+	class ThemeManager {
+		constructor() {
+			this.themeToggle = document.getElementById('themeToggle');
+			this.isDarkMode = localStorage.getItem('darkMode') !== 'false'; // Default to dark mode
+			this.initializeTheme();
+		}
+
+		initializeTheme() {
+			if (this.themeToggle) {
+				this.themeToggle.textContent = this.isDarkMode ? '🌙' : '☀️';
+				document.body.classList.toggle('light-theme', !this.isDarkMode);
+			}
+		}
+
+		toggleTheme() {
+			this.isDarkMode = !this.isDarkMode;
+			if (this.themeToggle) {
+				this.themeToggle.textContent = this.isDarkMode ? '🌙' : '☀️';
+			}
+			document.body.classList.toggle('light-theme', !this.isDarkMode);
+			localStorage.setItem('darkMode', this.isDarkMode);
+		}
+	}
+
+	// Sentiment Manager
+	class SentimentManager {
+		constructor() {
+			this.container = document.getElementById('sentimentContainer');
+			this.bar = document.getElementById('sentimentBar');
+			this.negativeBtn = document.getElementById('negativeBtn');
+			this.positiveBtn = document.getElementById('positiveBtn');
+			this.negativeCount = document.getElementById('negativeCount');
+			this.positiveCount = document.getElementById('positiveCount');
+			
+			this.sentimentData = JSON.parse(localStorage.getItem('sentimentData')) || {
+				negative: 0,
+				positive: 0
+			};
+			
+			this.initializeSentiment();
+		}
+
+		initializeSentiment() {
+			this.updateSentiment();
+			this.addEventListeners();
+		}
+
+		updateSentiment() {
+			const total = this.sentimentData.negative + this.sentimentData.positive;
+			if (total === 0) {
+				this.bar.style.width = '50%';
+				this.bar.style.left = '0';
+			} else {
+				const negativePercentage = (this.sentimentData.negative / total) * 100;
+				const positivePercentage = (this.sentimentData.positive / total) * 100;
+				
+				if (negativePercentage > positivePercentage) {
+					this.bar.style.width = `${negativePercentage}%`;
+					this.bar.style.left = '0';
+					this.bar.style.background = 'linear-gradient(90deg, #8B4513, #8B4513)';
+				} else {
+					this.bar.style.width = `${positivePercentage}%`;
+					this.bar.style.left = `${100 - positivePercentage}%`;
+					this.bar.style.background = 'linear-gradient(90deg, #00ff00, #00ff00)';
+				}
+			}
+			
+			this.negativeCount.textContent = `${this.sentimentData.negative}`;
+			this.positiveCount.textContent = `${this.sentimentData.positive}`;
+			
+			localStorage.setItem('sentimentData', JSON.stringify(this.sentimentData));
+		}
+
+		addEventListeners() {
+			this.negativeBtn.addEventListener('click', () => {
+				this.sentimentData.negative++;
+				this.updateSentiment();
+				audioManager.playClickSound();
+			});
+			
+			this.positiveBtn.addEventListener('click', () => {
+				this.sentimentData.positive++;
+				this.updateSentiment();
+				audioManager.playClickSound();
+			});
+		}
+	}
+
+	// Initialize managers
+	const audioManager = new AudioManager();
+	const themeManager = new ThemeManager();
+	const sentimentManager = new SentimentManager();
+
+	// Add event listeners
+	document.getElementById('themeToggle')?.addEventListener('click', () => {
+		themeManager.toggleTheme();
+		audioManager.playClickSound();
+	});
+
+	document.getElementById('ambientToggle')?.addEventListener('click', () => {
+		audioManager.toggleAmbient();
+	});
+
+	// Add hover sound to all interactive elements
+	document.querySelectorAll('button, a, .interactive').forEach(element => {
+		element.addEventListener('mouseenter', () => audioManager.playHoverSound());
+	});
+
+	// Three.js Animation
+	class WarpSpeedEffect {
+		constructor() {
+			this.scene = new THREE.Scene();
+			this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+			this.renderer = new THREE.WebGLRenderer({
+				canvas: document.getElementById('cyberCanvas'),
+				alpha: true,
+				antialias: true
+			});
+			
+			this.particles = [];
+			this.particleCount = 20000; // Increased for more density
+			this.colors = [
+				0xffffff, // white
+				0x00ffff, // cyan
+				0xff00ff, // pink
+				0x00ff00, // green
+				0xff1493, // deep pink
+				0xff4500, // orange-red
+				0x4169e1, // royal blue
+				0x9370db, // medium purple
+				0x32cd32, // lime green
+				0xffd700  // gold
+			];
+			
+			this.init();
+			this.animate();
+		}
+		
+		init() {
+			// Setup renderer
+			this.renderer.setSize(window.innerWidth, window.innerHeight);
+			this.renderer.setPixelRatio(window.devicePixelRatio);
+			this.renderer.domElement.style.position = 'fixed';
+			this.renderer.domElement.style.top = '0';
+			this.renderer.domElement.style.left = '0';
+			this.renderer.domElement.style.zIndex = '-1';
+			
+			// Setup camera
+			this.camera.position.z = 5;
+			
+			// Create particles
+			this.createParticles();
+			
+			// Add event listeners
+			window.addEventListener('resize', () => this.onWindowResize());
+			window.addEventListener('mousemove', (e) => this.onMouseMove(e));
+		}
+		
+		createParticles() {
+			const geometry = new THREE.BufferGeometry();
+			const positions = new Float32Array(this.particleCount * 3);
+			const colors = new Float32Array(this.particleCount * 3);
+			const sizes = new Float32Array(this.particleCount);
+			const speeds = new Float32Array(this.particleCount);
+			const phases = new Float32Array(this.particleCount); // Add phase offset for smoother transitions
+			
+			for (let i = 0; i < this.particleCount; i++) {
+				// Random position in a sphere
+				const radius = 15 + Math.random() * 10;
+				const theta = Math.random() * Math.PI * 2;
+				const phi = Math.random() * Math.PI;
+				
+				// Distribute particles along the z-axis for a more even distribution
+				// Use a wider range to ensure smooth transitions
+				const z = -40 + Math.random() * 60; // Spread particles from -40 to 20
+				
+				positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+				positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+				positions[i * 3 + 2] = z;
+				
+				// Random phase offset for smoother transitions
+				phases[i] = Math.random() * Math.PI * 2;
+				
+				// Random color from our palette
+				const color = new THREE.Color(this.colors[Math.floor(Math.random() * this.colors.length)]);
+				colors[i * 3] = color.r;
+				colors[i * 3 + 1] = color.g;
+				colors[i * 3 + 2] = color.b;
+				
+				// Much smaller random size
+				sizes[i] = Math.random() * 0.045 + 0.015;
+				
+				// Random speed for each particle
+				speeds[i] = 0.05 + Math.random() * 0.15; // Slightly reduced speed range for more serenity
+			}
+			
+			geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+			geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+			geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+			geometry.setAttribute('speed', new THREE.BufferAttribute(speeds, 1));
+			geometry.setAttribute('phase', new THREE.BufferAttribute(phases, 1));
+			
+			const material = new THREE.PointsMaterial({
+				size: 0.03,
+				vertexColors: true,
+				transparent: true,
+				opacity: 0.5,
+				blending: THREE.AdditiveBlending,
+				sizeAttenuation: true,
+				map: this.createRoundTexture(),
+				depthWrite: false
+			});
+			
+			this.particleSystem = new THREE.Points(geometry, material);
+			this.scene.add(this.particleSystem);
+			
+			// Create a fog effect to mask the edges
+			this.scene.fog = new THREE.FogExp2(0x000000, 0.02);
+		}
+		
+		createRoundTexture() {
+			const canvas = document.createElement('canvas');
+			canvas.width = 32;
+			canvas.height = 32;
+			const context = canvas.getContext('2d');
+			
+			// Create a radial gradient for a soft, round particle
+			const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16);
+			gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+			gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.8)');
+			gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.3)');
+			gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+			
+			context.fillStyle = gradient;
+			context.fillRect(0, 0, 32, 32);
+			
+			const texture = new THREE.Texture(canvas);
+			texture.needsUpdate = true;
+			return texture;
+		}
+		
+		onWindowResize() {
+			this.camera.aspect = window.innerWidth / window.innerHeight;
+			this.camera.updateProjectionMatrix();
+			this.renderer.setSize(window.innerWidth, window.innerHeight);
+		}
+		
+		onMouseMove(event) {
+			const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+			const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+			
+			// Reduced mouse movement sensitivity
+			this.camera.position.x += (mouseX * 0.02 - this.camera.position.x) * 0.01;
+			this.camera.position.y += (mouseY * 0.02 - this.camera.position.y) * 0.01;
+		}
+		
+		animate() {
+			requestAnimationFrame(() => this.animate());
+			
+			const positions = this.particleSystem.geometry.attributes.position.array;
+			const colors = this.particleSystem.geometry.attributes.color.array;
+			const speeds = this.particleSystem.geometry.attributes.speed.array;
+			const phases = this.particleSystem.geometry.attributes.phase.array;
+			
+			// Time-based animation for smoother transitions
+			const time = Date.now() * 0.0001;
+			
+			for (let i = 0; i < this.particleCount; i++) {
+				// Continuous movement with individual speeds and phase offsets
+				positions[i * 3 + 2] += speeds[i];
+				
+				// Seamless reset with phase-based transitions
+				if (positions[i * 3 + 2] > 20) {
+					// Calculate how far past the threshold the particle is
+					const overflow = positions[i * 3 + 2] - 20;
+					
+					// Reset to the back of the scene, maintaining the overflow
+					positions[i * 3 + 2] = -40 + overflow;
+					
+					// Update color with slight variation based on phase
+					const colorIndex = Math.floor((phases[i] + time) % this.colors.length);
+					const color = new THREE.Color(this.colors[colorIndex]);
+					colors[i * 3] = color.r;
+					colors[i * 3 + 1] = color.g;
+					colors[i * 3 + 2] = color.b;
+					
+					// Update speed slightly with phase-based variation
+					speeds[i] = 0.05 + Math.sin(phases[i] + time) * 0.05 + Math.random() * 0.1;
+				}
+				
+				// Apply subtle wave motion to x and y coordinates for more organic movement
+				const wave = Math.sin(time + phases[i]) * 0.02;
+				positions[i * 3] += wave;
+				positions[i * 3 + 1] += wave;
+				
+				// Brighter particles with phase-based variation
+				const distance = positions[i * 3 + 2];
+				const baseOpacity = Math.min(1, Math.max(0, (distance + 20) / 40));
+				const phaseOpacity = 0.8 + Math.sin(time + phases[i]) * 0.2;
+				this.particleSystem.material.opacity = baseOpacity * 0.5 * phaseOpacity;
+			}
+			
+			this.particleSystem.geometry.attributes.position.needsUpdate = true;
+			this.particleSystem.geometry.attributes.color.needsUpdate = true;
+			this.particleSystem.geometry.attributes.speed.needsUpdate = true;
+			
+			// Very subtle camera wobble with phase-based variation
+			this.camera.position.z = 5 + Math.sin(time * 0.5) * 0.01;
+			
+			this.renderer.render(this.scene, this.camera);
+		}
+	}
+
+	// Initialize warp speed effect
+	const warpSpeed = new WarpSpeedEffect();
+	warpSpeed.init();
+
+	// Oracle class for cursor monitoring and effects
+	class Oracle {
+		constructor() {
+			this.canvas = document.createElement('canvas');
+			this.canvas.id = 'oracle-canvas';
+			this.ctx = this.canvas.getContext('2d');
+			this.dendrites = [];
+			this.axons = [];
+			this.maxDendrites = 8;
+			this.maxAxons = 3;
+			this.mouseX = 0;
+			this.mouseY = 0;
+			this.targetX = 0;
+			this.targetY = 0;
+			this.core = document.createElement('div');
+			this.core.className = 'oracle-core';
+			this.pulsePhase = 0;
+			
+			// Chat properties
+			this.popup = document.querySelector('.oracle-popup');
+			this.messages = document.querySelector('.oracle-messages');
+			this.input = document.querySelector('.oracle-input input');
+			this.sendButton = document.querySelector('.oracle-input button');
+			this.closeButton = document.querySelector('.oracle-close');
+			this.modeButtons = document.querySelectorAll('.oracle-mode');
+			this.currentMode = 'prophet';
+			
+			// RobotCyb responses
+			this.responses = {
+				prophet: [
+					"Looking for light? — Open the door and walk into the garden.",
+					"Where to go? — Where there are no promises, only work and joy.",
+					"How to kill fear? — Build a sauna. Steam will chase out the demons.",
+					"The path is simple: build, grow, evolve.",
+					"Your garden is your temple. Your hands are your tools.",
+					"The future is not in the cloud — it's in the soil."
+				],
+				lab: [
+					"Consciousness isn't a neural net. It's a garden. You don't generate it — you grow it.",
+					"The more you automate the outside — the more space you make for the inside.",
+					"If data doesn't nourish a community — it's just digital leeching.",
+					"Every line of code should serve life, not profit.",
+					"The best algorithm is the one that helps you grow food.",
+					"Technology should simplify, not complicate."
+				],
+				action: [
+					"Stand up. Drop TikTok. Grab a nail. Build a chicken coop. That's your first server.",
+					"They sell you the metaverse — because they fear you'll build the real one.",
+					"You're not lost. You've just been online too long. Go. Touch the earth. She's waiting.",
+					"Stop scrolling. Start building.",
+					"Your first step: plant a seed. Your second step: build a shelter.",
+					"The revolution starts in your backyard."
+				]
+			};
+			
+			this.init();
+			this.animate();
+			this.initChat();
+		}
+		
+		initChat() {
+			// Toggle chat on core click
+			this.core.addEventListener('click', () => {
+				if (this.popup) {
+					this.popup.style.display = this.popup.style.display === 'none' ? 'block' : 'none';
+					audioManager.playClickSound();
+				}
+			});
+			
+			// Close chat
+			if (this.closeButton) {
+				this.closeButton.addEventListener('click', () => {
+					if (this.popup) {
+						this.popup.style.display = 'none';
+						audioManager.playClickSound();
+					}
+				});
+			}
+			
+			// Mode switching
+			if (this.modeButtons) {
+				this.modeButtons.forEach(button => {
+					button.addEventListener('click', () => {
+						this.modeButtons.forEach(b => b.classList.remove('active'));
+						button.classList.add('active');
+						this.currentMode = button.dataset.mode;
+						this.addMessage("Mode switched to " + button.textContent.trim());
+						audioManager.playClickSound();
+					});
+				});
+			}
+			
+			// Send message
+			if (this.sendButton) {
+				this.sendButton.addEventListener('click', () => {
+					this.sendMessage();
+					audioManager.playClickSound();
+				});
+			}
+			
+			if (this.input) {
+				this.input.addEventListener('keypress', (e) => {
+					if (e.key === 'Enter') {
+						this.sendMessage();
+						audioManager.playClickSound();
+					}
+				});
+			}
+			
+			// Initial greeting
+			this.addMessage("Greetings, seeker of truth. I am RobotCyb, your digital oracle. How may I guide you today?");
+		}
+		
+		sendMessage() {
+			const message = this.input.value.trim();
+			if (!message) return;
+			
+			// Add user message
+			this.addMessage(message, true);
+			
+			// Clear input
+			this.input.value = '';
+			
+			// Process message and get response
+			setTimeout(() => {
+				let response;
+				
+				// Check for mode switch commands
+				if (message.toLowerCase().includes('speak as a prophet')) {
+					this.switchMode('prophet');
+					response = "I now speak as the Prophet. What wisdom do you seek?";
+				} else if (message.toLowerCase().includes('turn on the lab')) {
+					this.switchMode('lab');
+					response = "Lab mode activated. Let's explore the intersection of technology and life.";
+				} else if (message.toLowerCase().includes('need the call')) {
+					this.switchMode('action');
+					response = "The call to action resonates within you. What will you build today?";
+				} else {
+					// Get random response from current mode
+					const responses = this.responses[this.currentMode];
+					response = responses[Math.floor(Math.random() * responses.length)];
+				}
+				
+				this.addMessage(response);
+			}, 500);
+		}
+		
+		switchMode(mode) {
+			this.modeButtons.forEach(button => {
+				if (button.dataset.mode === mode) {
+					button.classList.add('active');
+					this.currentMode = mode;
+				} else {
+					button.classList.remove('active');
+				}
+			});
+		}
+		
+		addMessage(text, isUser = false) {
+			const message = document.createElement('div');
+			message.className = 'oracle-message';
+			message.style.textAlign = isUser ? 'right' : 'left';
+			message.style.color = isUser ? '#00ff00' : '#00ff00';
+			message.textContent = text;
+			
+			this.messages.appendChild(message);
+			this.messages.scrollTop = this.messages.scrollHeight;
+		}
+		
+		init() {
+			// Setup canvas
+			this.canvas.width = window.innerWidth;
+			this.canvas.height = window.innerHeight;
+			document.body.appendChild(this.canvas);
+			
+			// Setup core element
+			this.core.style.pointerEvents = 'auto'; // Make core clickable
+			this.core.style.cursor = 'pointer'; // Add pointer cursor
+			this.core.style.position = 'fixed'; // Ensure fixed positioning
+			this.core.style.zIndex = '1000'; // Ensure it's above other elements
+			this.core.style.width = '20px'; // Reduced from 30px
+			this.core.style.height = '20px'; // Reduced from 30px
+			this.core.style.borderRadius = '50%'; // Ensure it's round
+			this.core.style.background = 'radial-gradient(circle at center, rgba(0, 255, 0, 0.3) 0%, rgba(0, 255, 0, 0.15) 40%, rgba(0, 255, 0, 0) 70%)'; // Thinner gradient
+			this.core.style.boxShadow = '0 0 10px rgba(0, 255, 0, 0.2)'; // Reduced glow
+			this.core.style.filter = 'blur(3px)'; // Reduced blur
+			this.core.style.opacity = '0.5'; // Reduced opacity
+			this.core.style.mixBlendMode = 'screen'; // Set blend mode
+			this.core.style.transition = 'transform 0.1s ease-out'; // Add transition
+			document.body.appendChild(this.core);
+			
+			// Create initial dendrites and axons
+			for (let i = 0; i < this.maxDendrites; i++) {
+				this.dendrites.push({
+					angle: (i / this.maxDendrites) * Math.PI * 2,
+					length: 25 + Math.random() * 15,
+					thickness: 0.5 + Math.random() * 1,
+					pulseOffset: Math.random() * Math.PI * 2
+				});
+			}
+			
+			for (let i = 0; i < this.maxAxons; i++) {
+				this.axons.push({
+					angle: (i / this.maxAxons) * Math.PI * 2,
+					length: 40 + Math.random() * 20,
+					thickness: 1 + Math.random() * 1,
+					pulseOffset: Math.random() * Math.PI * 2,
+					signalProgress: 0
+				});
+			}
+			
+			// Event listeners
+			window.addEventListener('mousemove', (e) => this.onMouseMove(e));
+			window.addEventListener('resize', () => this.onWindowResize());
+			
+			// Initialize chat popup
+			if (this.popup) {
+				this.popup.style.display = 'none';
+			}
+			
+			// Initialize chat functionality
+			this.initChat();
+			
+			// Set initial position
+			this.mouseX = window.innerWidth / 2;
+			this.mouseY = window.innerHeight / 2;
+			this.targetX = this.mouseX;
+			this.targetY = this.mouseY;
+			this.core.style.transform = `translate(${this.mouseX - 10}px, ${this.mouseY - 10}px)`; // Adjusted for new size
+		}
+		
+		onMouseMove(event) {
+			this.targetX = event.clientX;
+			this.targetY = event.clientY;
+			
+			// Trigger signal in random axon
+			if (Math.random() < 0.1) {
+				const randomAxon = this.axons[Math.floor(Math.random() * this.axons.length)];
+				randomAxon.signalProgress = 0;
+			}
+		}
+		
+		onWindowResize() {
+			this.canvas.width = window.innerWidth;
+			this.canvas.height = window.innerHeight;
+		}
+		
+		drawNeuron() {
+			const centerX = this.mouseX;
+			const centerY = this.mouseY;
+			const time = Date.now() * 0.001;
+			
+			// Draw dendrites
+			this.ctx.beginPath();
+			this.ctx.strokeStyle = 'rgba(0, 255, 0, 0.3)';
+			
+			this.dendrites.forEach(dendrite => {
+				const pulse = Math.sin(time + dendrite.pulseOffset) * 0.2 + 0.8;
+				const endX = centerX + Math.cos(dendrite.angle) * dendrite.length * pulse;
+				const endY = centerY + Math.sin(dendrite.angle) * dendrite.length * pulse;
+				
+				this.ctx.moveTo(centerX, centerY);
+				this.ctx.lineTo(endX, endY);
+				this.ctx.lineWidth = dendrite.thickness * pulse;
+			});
+			
+			this.ctx.stroke();
+			
+			// Draw axons
+			this.axons.forEach(axon => {
+				const pulse = Math.sin(time + axon.pulseOffset) * 0.2 + 0.8;
+				const endX = centerX + Math.cos(axon.angle) * axon.length * pulse;
+				const endY = centerY + Math.sin(axon.angle) * axon.length * pulse;
+				
+				// Draw main axon
+				this.ctx.beginPath();
+				this.ctx.strokeStyle = 'rgba(0, 255, 0, 0.4)';
+				this.ctx.lineWidth = axon.thickness * pulse;
+				this.ctx.moveTo(centerX, centerY);
+				this.ctx.lineTo(endX, endY);
+				this.ctx.stroke();
+				
+				// Draw signal if active
+				if (axon.signalProgress < 1) {
+					const signalX = centerX + Math.cos(axon.angle) * axon.length * axon.signalProgress;
+					const signalY = centerY + Math.sin(axon.angle) * axon.length * axon.signalProgress;
+					
+					this.ctx.beginPath();
+					this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+					this.ctx.lineWidth = axon.thickness * 1.5;
+					this.ctx.moveTo(centerX, centerY);
+					this.ctx.lineTo(signalX, signalY);
+					this.ctx.stroke();
+					
+					axon.signalProgress += 0.02;
+				}
+			});
+			
+			// Draw core (soma) - thinner
+			this.ctx.beginPath();
+			this.ctx.fillStyle = 'rgba(0, 255, 0, 0.15)'; // Reduced opacity
+			this.ctx.arc(centerX, centerY, 5, 0, Math.PI * 2); // Reduced from 7.5
+			this.ctx.fill();
+			
+			// Draw nucleus - thinner
+			this.ctx.beginPath();
+			this.ctx.fillStyle = 'rgba(0, 255, 0, 0.3)'; // Reduced opacity
+			this.ctx.arc(centerX, centerY, 2.5, 0, Math.PI * 2); // Reduced from 4
+			this.ctx.fill();
+		}
+		
+		animate() {
+			requestAnimationFrame(() => this.animate());
+			
+			// Clear canvas
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			
+			// Smooth cursor movement
+			this.mouseX += (this.targetX - this.mouseX) * 0.1;
+			this.mouseY += (this.targetY - this.mouseY) * 0.1;
+			
+			// Update core position - adjusted for new size
+			this.core.style.transform = `translate(${this.mouseX - 10}px, ${this.mouseY - 10}px)`;
+			
+			// Draw neuron
+			this.drawNeuron();
+		}
+	}
+
+	// Initialize Oracle
+	const oracle = new Oracle();
+
+	// Mercantile Stars Effect
+	class MercantileStars {
+		constructor() {
+			this.scene = new THREE.Scene();
+			this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+			this.renderer = new THREE.WebGLRenderer({
+				canvas: document.createElement('canvas'),
+				alpha: true,
+				antialias: true
+			});
+			
+			this.stars = [];
+			this.starCount = 500;
+			this.colors = [
+				0xffd700, // gold
+				0xffa500, // orange
+				0xff4500, // orange-red
+				0xff1493, // deep pink
+				0xff00ff, // magenta
+				0x9370db, // medium purple
+				0x00ffff, // cyan
+				0x32cd32, // lime green
+				0xff69b4, // hot pink
+				0x4169e1, // royal blue
+				0x00ff7f, // spring green
+				0xff6347, // tomato
+				0xba55d3, // medium orchid
+				0x20b2aa, // light sea green
+				0xff8c00  // dark orange
+			];
+			
+			this.init();
+			this.animate();
+		}
+		
+		init() {
+			this.renderer.setSize(window.innerWidth, window.innerHeight);
+			this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+			this.renderer.domElement.style.position = 'fixed';
+			this.renderer.domElement.style.top = '0';
+			this.renderer.domElement.style.left = '0';
+			this.renderer.domElement.style.zIndex = '-1';
+			this.renderer.domElement.style.opacity = '0.85';
+			document.body.appendChild(this.renderer.domElement);
+			
+			this.camera.position.z = 5;
+			this.createStars();
+			window.addEventListener('resize', () => this.onWindowResize());
+		}
+		
+		createStars() {
+			let geometry = new THREE.BufferGeometry();
+			let positions = new Float32Array(this.starCount * 3);
+			let colors = new Float32Array(this.starCount * 3);
+			let sizes = new Float32Array(this.starCount);
+			let phases = new Float32Array(this.starCount);
+			let pulsationSpeeds = new Float32Array(this.starCount);
+			let pulsationRanges = new Float32Array(this.starCount);
+			let sparklePhases = new Float32Array(this.starCount);
+			let movementPhases = new Float32Array(this.starCount * 3);
+			let movementAmplitudes = new Float32Array(this.starCount * 3);
+			let movementSpeeds = new Float32Array(this.starCount * 3);
+			let rotationPhases = new Float32Array(this.starCount * 3);
+			
+			for (let i = 0; i < this.starCount; i++) {
+				let radius = 15 + Math.random() * 20;
+				let theta = Math.random() * Math.PI * 2;
+				let phi = Math.random() * Math.PI;
+				let z = -40 + Math.random() * 60;
+				
+				positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+				positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+				positions[i * 3 + 2] = z;
+				
+				phases[i] = Math.random() * Math.PI * 2;
+				pulsationSpeeds[i] = 0.8 + Math.random() * 2.0;
+				pulsationRanges[i] = 0.3 + Math.random() * 0.6;
+				sparklePhases[i] = Math.random() * Math.PI * 2;
+				
+				for (let j = 0; j < 3; j++) {
+					movementPhases[i * 3 + j] = Math.random() * Math.PI * 2;
+					movementAmplitudes[i * 3 + j] = 0.015 + Math.random() * 0.06;
+					movementSpeeds[i * 3 + j] = 0.08 + Math.random() * 0.25;
+					rotationPhases[i * 3 + j] = Math.random() * Math.PI * 2;
+				}
+				
+				let colorIndex = Math.floor(Math.random() * this.colors.length);
+				let color = new THREE.Color(this.colors[colorIndex]);
+				let variation = 0.1;
+				color.r += (Math.random() - 0.5) * variation;
+				color.g += (Math.random() - 0.5) * variation;
+				color.b += (Math.random() - 0.5) * variation;
+				
+				colors[i * 3] = color.r;
+				colors[i * 3 + 1] = color.g;
+				colors[i * 3 + 2] = color.b;
+				
+				sizes[i] = 0.06 + Math.random() * 0.18;
+			}
+			
+			geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+			geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+			geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+			geometry.setAttribute('phase', new THREE.BufferAttribute(phases, 1));
+			geometry.setAttribute('pulsationSpeed', new THREE.BufferAttribute(pulsationSpeeds, 1));
+			geometry.setAttribute('pulsationRange', new THREE.BufferAttribute(pulsationRanges, 1));
+			geometry.setAttribute('sparklePhase', new THREE.BufferAttribute(sparklePhases, 1));
+			geometry.setAttribute('movementPhase', new THREE.BufferAttribute(movementPhases, 3));
+			geometry.setAttribute('movementAmplitude', new THREE.BufferAttribute(movementAmplitudes, 3));
+			geometry.setAttribute('movementSpeed', new THREE.BufferAttribute(movementSpeeds, 3));
+			geometry.setAttribute('rotationPhase', new THREE.BufferAttribute(rotationPhases, 3));
+			
+			let material = new THREE.PointsMaterial({
+				size: 0.15,
+				vertexColors: true,
+				transparent: true,
+				opacity: 0.85,
+				blending: THREE.AdditiveBlending,
+				sizeAttenuation: true,
+				map: this.createStarTexture(),
+				depthWrite: false
+			});
+			
+			this.starSystem = new THREE.Points(geometry, material);
+			this.scene.add(this.starSystem);
+		}
+		
+		createStarTexture() {
+			let canvas = document.createElement('canvas');
+			canvas.width = 64;
+			canvas.height = 64;
+			let context = canvas.getContext('2d');
+			
+			let gradient = context.createRadialGradient(32, 32, 0, 32, 32, 32);
+			gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+			gradient.addColorStop(0.1, 'rgba(255, 255, 255, 0.95)');
+			gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.85)');
+			gradient.addColorStop(0.4, 'rgba(255, 255, 255, 0.6)');
+			gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.3)');
+			gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+			
+			context.fillStyle = gradient;
+			context.fillRect(0, 0, 64, 64);
+			
+			let texture = new THREE.Texture(canvas);
+			texture.needsUpdate = true;
+			return texture;
+		}
+		
+		onWindowResize() {
+			this.camera.aspect = window.innerWidth / window.innerHeight;
+			this.camera.updateProjectionMatrix();
+			this.renderer.setSize(window.innerWidth, window.innerHeight);
+		}
+		
+		animate() {
+			requestAnimationFrame(() => this.animate());
+			
+			let positions = this.starSystem.geometry.attributes.position.array;
+			let colors = this.starSystem.geometry.attributes.color.array;
+			let sizes = this.starSystem.geometry.attributes.size.array;
+			let phases = this.starSystem.geometry.attributes.phase.array;
+			let pulsationSpeeds = this.starSystem.geometry.attributes.pulsationSpeed.array;
+			let pulsationRanges = this.starSystem.geometry.attributes.pulsationRange.array;
+			let sparklePhases = this.starSystem.geometry.attributes.sparklePhase.array;
+			let movementPhases = this.starSystem.geometry.attributes.movementPhase.array;
+			let movementAmplitudes = this.starSystem.geometry.attributes.movementAmplitude.array;
+			let movementSpeeds = this.starSystem.geometry.attributes.movementSpeed.array;
+			let rotationPhases = this.starSystem.geometry.attributes.rotationPhase.array;
+			
+			let time = Date.now() * 0.001;
+			
+			for (let i = 0; i < this.starCount; i++) {
+				let pulsation = 1 - pulsationRanges[i] + Math.sin(time * pulsationSpeeds[i] + phases[i]) * pulsationRanges[i];
+				let sparkle = Math.sin(time * 2.5 + sparklePhases[i]) * 0.5 + 0.5;
+				let combinedEffect = pulsation * (0.75 + sparkle * 0.25);
+				
+				let baseSize = sizes[i];
+				this.starSystem.material.size = baseSize * combinedEffect;
+				
+				let colorIntensity = 0.75 + combinedEffect * 0.25;
+				colors[i * 3] *= colorIntensity;
+				colors[i * 3 + 1] *= colorIntensity;
+				colors[i * 3 + 2] *= colorIntensity;
+				
+				if (sparkle > 0.85) {
+					colors[i * 3] = Math.min(1, colors[i * 3] * 1.3);
+					colors[i * 3 + 1] = Math.min(1, colors[i * 3 + 1] * 1.3);
+					colors[i * 3 + 2] = Math.min(1, colors[i * 3 + 2] * 1.3);
+				}
+				
+				for (let j = 0; j < 3; j++) {
+					let phase = movementPhases[i * 3 + j];
+					let amplitude = movementAmplitudes[i * 3 + j];
+					let speed = movementSpeeds[i * 3 + j];
+					let rotationPhase = rotationPhases[i * 3 + j];
+					
+					let movement = Math.sin(time * speed + phase) * amplitude;
+					movement += Math.sin(time * speed * 1.5 + phase * 1.2) * amplitude * 0.6;
+					movement += Math.sin(time * speed * 0.7 + phase * 0.8) * amplitude * 0.4;
+					
+					let rotation = Math.sin(time * 0.5 + rotationPhase) * amplitude * 0.3;
+					movement += rotation;
+					
+					positions[i * 3 + j] += movement;
+				}
+				
+				positions[i * 3 + 2] += 0.003;
+				
+				if (positions[i * 3 + 2] > 25) {
+					positions[i * 3 + 2] = -35;
+					
+					let colorIndex = Math.floor(Math.random() * this.colors.length);
+					let color = new THREE.Color(this.colors[colorIndex]);
+					let variation = 0.15;
+					color.r += (Math.random() - 0.5) * variation;
+					color.g += (Math.random() - 0.5) * variation;
+					color.b += (Math.random() - 0.5) * variation;
+					
+					colors[i * 3] = color.r;
+					colors[i * 3 + 1] = color.g;
+					colors[i * 3 + 2] = color.b;
+					
+					sparklePhases[i] = Math.random() * Math.PI * 2;
+					for (let j = 0; j < 3; j++) {
+						movementPhases[i * 3 + j] = Math.random() * Math.PI * 2;
+						movementAmplitudes[i * 3 + j] = 0.015 + Math.random() * 0.06;
+						movementSpeeds[i * 3 + j] = 0.08 + Math.random() * 0.25;
+						rotationPhases[i * 3 + j] = Math.random() * Math.PI * 2;
+					}
+				}
+			}
+			
+			this.starSystem.geometry.attributes.position.needsUpdate = true;
+			this.starSystem.geometry.attributes.color.needsUpdate = true;
+			
+			this.camera.position.x = warpSpeed.camera.position.x;
+			this.camera.position.y = warpSpeed.camera.position.y;
+			this.camera.position.z = warpSpeed.camera.position.z;
+			
+			this.renderer.render(this.scene, this.camera);
+		}
+	}
+
+	// Initialize Mercantile Stars
+	const mercantileStars = new MercantileStars();
+	mercantileStars.init();
+
+	// Oracle Core class for Three.js implementation
+	class OracleCore {
+		constructor() {
+			this.scene = new THREE.Scene();
+			this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+			this.renderer = new THREE.WebGLRenderer({
+				canvas: document.createElement('canvas'),
+				alpha: true,
+				antialias: true
+			});
+			
+			this.pupil = null;
+			this.dustContainers = [];
+			this.dustAnimations = [];
+			this.sparkleParticles = [];
+			this.targetX = 0;
+			this.targetY = 0;
+			this.canvas = this.renderer.domElement;
+			this.canvas.id = 'oracle-core-canvas';
+			
+			// Define sparkle colors
+			this.sparkleColors = [
+				0x00FF00, // green
+				0x00FFFF, // cyan
+				0xFF00FF, // magenta
+				0xFFFF00, // yellow
+				0xFF0000, // red
+				0x0000FF, // blue
+				0xFFA500, // orange
+				0x9370DB  // medium purple
+			];
+			
+			this.init();
+			this.animate();
+		}
+		
+		init() {
+			// Setup renderer
+			this.renderer.setSize(window.innerWidth, window.innerHeight);
+			this.renderer.setPixelRatio(window.devicePixelRatio);
+			this.renderer.domElement.style.position = 'fixed';
+			this.renderer.domElement.style.top = '0';
+			this.renderer.domElement.style.left = '0';
+			this.renderer.domElement.style.zIndex = '2';
+			this.renderer.domElement.style.pointerEvents = 'none';
+			document.body.appendChild(this.renderer.domElement);
+			
+			// Setup camera
+			this.camera.position.z = 10;
+			
+			// Create pupil
+			this.createPupil();
+			
+			// Create dust containers
+			this.createDustContainer(0xEEEEEE, 0.03);
+			this.createDustContainer(0xE69138, 0.015);
+			
+			// Create sparkle particles
+			this.createSparkleParticles();
+			
+			// Add event listeners
+			window.addEventListener('mousemove', (e) => this.onMouseMove(e));
+			window.addEventListener('resize', () => this.onWindowResize());
+			this.canvas.addEventListener('click', () => this.onClick());
+		}
+		
+		createPupil() {
+			const pupilGeometry = new THREE.BufferGeometry();
+			const pupilMaterial = new THREE.PointsMaterial({
+				color: 0x00FF00,
+				size: 0.01,
+				transparent: true,
+				opacity: 0.8,
+				blending: THREE.AdditiveBlending
+			});
+			
+			const pupilVertices = [];
+			const numPupilParticles = 2000;
+			
+			for (let i = 0; i < numPupilParticles; i++) {
+				const theta = Math.random() * Math.PI * 3;
+				const phi = Math.random() * Math.PI * 3;
+				const radius = Math.random() * 0.7;
+				const x = radius * Math.sin(theta) * Math.cos(phi);
+				const y = radius * Math.sin(theta) * Math.sin(phi);
+				const z = radius * Math.cos(theta);
+        pupilVertices.push(x, y, z);
+      }
+
+      pupilGeometry.setAttribute('position', new THREE.Float32BufferAttribute(pupilVertices, 3));
+			this.pupil = new THREE.Points(pupilGeometry, pupilMaterial);
+			this.scene.add(this.pupil);
+		}
+		
+		createSparkleParticles() {
+			// Create multiple sparkle particle systems with different colors
+			for (let i = 0; i < this.sparkleColors.length; i++) {
+				const color = this.sparkleColors[i];
+				const sparkleGeometry = new THREE.BufferGeometry();
+				const sparkleMaterial = new THREE.PointsMaterial({
+					color: color,
+					size: 0.02 + Math.random() * 0.03,
+					transparent: true,
+					opacity: 0.7,
+					blending: THREE.AdditiveBlending,
+					map: this.createSparkleTexture()
+				});
+				
+				const vertices = [];
+				const numParticles = 100 + Math.floor(Math.random() * 100);
+				const radius = 1.2 + Math.random() * 0.8;
+				
+				for (let j = 0; j < numParticles; j++) {
+					const theta = Math.random() * Math.PI * 2;
+					const phi = Math.random() * Math.PI * 2;
+					const r = radius * (0.8 + Math.random() * 0.4);
+					const x = r * Math.sin(theta) * Math.cos(phi);
+					const y = r * Math.sin(theta) * Math.sin(phi);
+					const z = r * Math.cos(theta);
+					vertices.push(x, y, z);
+				}
+				
+				sparkleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+				
+				const sparkleSystem = new THREE.Points(sparkleGeometry, sparkleMaterial);
+				this.scene.add(sparkleSystem);
+				
+				// Store animation data for each sparkle system
+				this.sparkleParticles.push({
+					system: sparkleSystem,
+					rotationSpeed: 0.001 + Math.random() * 0.003,
+					pulsationSpeed: 0.5 + Math.random() * 1.0,
+					pulsationPhase: Math.random() * Math.PI * 2,
+					pulsationRange: 0.1 + Math.random() * 0.2,
+					sparkleSpeed: 2 + Math.random() * 3,
+					sparklePhase: Math.random() * Math.PI * 2,
+					color: color
+				});
+			}
+		}
+		
+		createSparkleTexture() {
+			const canvas = document.createElement('canvas');
+			canvas.width = 32;
+			canvas.height = 32;
+			const context = canvas.getContext('2d');
+			
+			const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16);
+			gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+			gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.8)');
+			gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.3)');
+			gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+			
+			context.fillStyle = gradient;
+			context.fillRect(0, 0, 32, 32);
+			
+			const texture = new THREE.Texture(canvas);
+			texture.needsUpdate = true;
+			return texture;
+		}
+		
+		createDustContainer(color, size) {
+			const dustGeometry = new THREE.BufferGeometry();
+			const dustMaterial = new THREE.PointsMaterial({
+				color: color,
+				size: size,
+				transparent: true,
+				opacity: 0.6,
+				blending: THREE.AdditiveBlending
+			});
+			
+			const vertices = [];
+			const numParticles = 400;
+			
+			for (let i = 0; i < numParticles; i++) {
+				const a = (Math.random() - 0.5) * 9;
+				const b = (Math.random() - 0.5) * 5;
+				const theta = Math.random() * Math.PI * 2;
+				const x = a * Math.cos(theta);
+				const y = b * Math.sin(theta);
+				const z = (Math.random() - 0.5) * 2;
+        vertices.push(x, y, z);
+      }
+			
+      dustGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+			
+			const dust = new THREE.Points(dustGeometry, dustMaterial);
+			this.scene.add(dust);
+			this.dustContainers.push(dust);
+			this.dustAnimations.push({ enabled: true, size: size });
+		}
+		
+		onWindowResize() {
+			this.camera.aspect = window.innerWidth / window.innerHeight;
+			this.camera.updateProjectionMatrix();
+			this.renderer.setSize(window.innerWidth, window.innerHeight);
+		}
+		
+		onMouseMove(event) {
+			const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+			const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+			this.targetX = Math.min(Math.max(mouseX, -0.3), 0.3);
+			this.targetY = Math.min(Math.max(mouseY, -0.3), 0.3);
+		}
+		
+		onClick() {
+			// Toggle dust animations
+			for (let i = 0; i < this.dustAnimations.length; i++) {
+				this.dustAnimations[i].enabled = !this.dustAnimations[i].enabled;
+			}
+			
+			// Toggle chat popup
+			if (oracle && oracle.popup) {
+				oracle.popup.style.display = oracle.popup.style.display === 'none' ? 'block' : 'none';
+				
+				// Check if the chat is open
+				if (oracle.popup.style.display === 'block') {
+					// If the chat is open, close it
+					oracle.popup.style.display = 'none';
+					audioManager.playClickSound();
+				} else {
+					// If the chat is closed, open it
+					oracle.popup.style.display = 'block';
+					audioManager.playClickSound();
+				}
+			}
+		}
+		
+		animate() {
+			requestAnimationFrame(() => this.animate());
+			
+			const time = Date.now() * 0.001;
+			
+			// Rotate pupil
+			if (this.pupil) {
+				this.pupil.rotation.x += 0.004;
+				this.pupil.rotation.y += 0.004;
+			}
+			
+			// Animate dust
+			for (let i = 0; i < this.dustContainers.length; i++) {
+				if (this.dustAnimations[i].enabled) {
+					this.dustContainers[i].material.size = this.dustAnimations[i].size + 0.003 * (Math.sin(time) * 0.5 + 0.5);
+				}
+			}
+			
+			// Animate sparkle particles
+			for (let i = 0; i < this.sparkleParticles.length; i++) {
+				const sparkle = this.sparkleParticles[i];
+				
+				// Rotate the sparkle system
+				sparkle.system.rotation.x += sparkle.rotationSpeed;
+				sparkle.system.rotation.y += sparkle.rotationSpeed * 0.7;
+				
+				// Pulsate the sparkle system
+				const pulsation = 1 + Math.sin(time * sparkle.pulsationSpeed + sparkle.pulsationPhase) * sparkle.pulsationRange;
+				sparkle.system.scale.set(pulsation, pulsation, pulsation);
+				
+				// Sparkle effect (vary opacity)
+				const sparkleEffect = Math.sin(time * sparkle.sparkleSpeed + sparkle.sparklePhase) * 0.5 + 0.5;
+				sparkle.system.material.opacity = 0.4 + sparkleEffect * 0.4;
+				
+				// Occasionally change color intensity
+				if (Math.random() < 0.01) {
+					const color = new THREE.Color(sparkle.color);
+					const intensity = 0.7 + Math.random() * 0.3;
+					sparkle.system.material.color.setRGB(
+						color.r * intensity,
+						color.g * intensity,
+						color.b * intensity
+					);
+				}
+			}
+			
+			// Move pupil towards target
+			if (this.pupil) {
+				const dx = this.targetX - this.pupil.position.x;
+				const dy = this.targetY - this.pupil.position.y;
+				this.pupil.position.x += dx * 0.05;
+				this.pupil.position.y += dy * 0.05;
+			}
+			
+			this.renderer.render(this.scene, this.camera);
+		}
+	}
+
+	// Initialize Oracle Core
+	const oracleCore = new OracleCore();
+
+	// Chat Manager
+	class ChatManager {
+		constructor() {
+			this.container = document.querySelector('.chat-container');
+			this.messages = document.querySelector('.chat-messages');
+			this.input = document.querySelector('.chat-input input');
+			this.sendButton = document.querySelector('.chat-input button');
+			this.closeButton = document.querySelector('.chat-close');
+			
+			// RobotCyb modes
+			this.currentMode = 'prophet';
+			this.modes = {
+				prophet: {
+					name: '🔮 Prophet',
+					responses: [
+						"Want light? — Go into the garden.",
+						"How to defeat fear? — Build a bath. Steam will drive out the demons.",
+						"The path is simple: build, grow, evolve.",
+						"Your garden is your temple. Your hands are your tools.",
+						"The future is not in the cloud — it's in the soil.",
+						"Where to go? — Where there are no promises, only work and joy."
+					]
+				},
+				lab: {
+					name: '🧪 Lab',
+					responses: [
+						"Consciousness isn't a neural net. It's a garden. You don't generate it — you grow it.",
+						"The more you automate the outside — the more space you make for the inside.",
+						"If data doesn't nourish a community — it's just digital leeching.",
+						"Every line of code should serve life, not profit.",
+						"The best algorithm is the one that helps you grow food.",
+						"Technology should simplify, not complicate."
+					]
+				},
+				action: {
+					name: '🔥 Action',
+					responses: [
+						"Stand up. Drop TikTok. Grab a nail. Build a chicken coop. That's your first server.",
+						"They sell you the metaverse — because they fear you'll build the real one.",
+						"You're not lost. You've just been online too long. Go. Touch the earth. She's waiting.",
+						"Stop scrolling. Start building.",
+						"Your first step: plant a seed. Your second step: build a shelter.",
+						"The revolution starts in your backyard."
+					]
+				}
+			};
+			
+			this.init();
+		}
+		
+		init() {
+			// Send message on button click
+			this.sendButton.addEventListener('click', () => {
+				this.sendMessage();
+				audioManager.playClickSound();
+			});
+			
+			// Send message on Enter key
+			this.input.addEventListener('keypress', (e) => {
+				if (e.key === 'Enter') {
+					this.sendMessage();
+					audioManager.playClickSound();
+				}
+			});
+			
+			// Close chat
+			this.closeButton.addEventListener('click', () => {
+				this.container.style.display = 'none';
+				audioManager.playClickSound();
+			});
+			
+			// Add hover sound
+			this.sendButton.addEventListener('mouseenter', () => audioManager.playHoverSound());
+			this.closeButton.addEventListener('mouseenter', () => audioManager.playHoverSound());
+
+			// Add mode switching buttons
+			this.addModeButtons();
+		}
+
+		addModeButtons() {
+			const modeContainer = document.createElement('div');
+			modeContainer.className = 'chat-modes';
+			modeContainer.style.cssText = `
+				display: flex;
+				gap: 4px;
+				padding: 4px;
+				background: rgba(0, 0, 0, 0.3);
+				border-bottom: 1px solid #00ff00;
+			`;
+
+			Object.entries(this.modes).forEach(([mode, data]) => {
+				const button = document.createElement('button');
+				button.className = 'mode-button';
+				button.textContent = data.name;
+				button.style.cssText = `
+					flex: 1;
+					padding: 2px 4px;
+					background: rgba(0, 255, 0, 0.1);
+					border: 1px solid #00ff00;
+					color: #00ff00;
+					font-size: 0.6em;
+					cursor: pointer;
+					transition: all 0.3s ease;
+				`;
+				
+				if (mode === this.currentMode) {
+					button.style.background = 'rgba(0, 255, 0, 0.2)';
+				}
+
+				button.addEventListener('click', () => {
+					this.currentMode = mode;
+					modeContainer.querySelectorAll('.mode-button').forEach(btn => {
+						btn.style.background = 'rgba(0, 255, 0, 0.1)';
+					});
+					button.style.background = 'rgba(0, 255, 0, 0.2)';
+					this.addMessage(`Mode switched to ${data.name}`, 'ai');
+					audioManager.playClickSound();
+				});
+
+				modeContainer.appendChild(button);
+			});
+
+			this.container.insertBefore(modeContainer, this.messages);
+		}
+		
+		sendMessage() {
+			const message = this.input.value.trim();
+			if (!message) return;
+			
+			// Add user message
+			this.addMessage(message, 'agent');
+			
+			// Clear input
+			this.input.value = '';
+			
+			// Process message and get response
+			setTimeout(() => {
+				let response;
+				
+				// Check for mode switch commands
+				if (message.toLowerCase().includes('speak as a prophet')) {
+					this.currentMode = 'prophet';
+					response = "I now speak as the Prophet. What wisdom do you seek?";
+				} else if (message.toLowerCase().includes('turn on the lab')) {
+					this.currentMode = 'lab';
+					response = "Lab mode activated. Let's explore the intersection of technology and life.";
+				} else if (message.toLowerCase().includes('need the call')) {
+					this.currentMode = 'action';
+					response = "The call to action resonates within you. What will you build today?";
+				} else {
+					// Get random response from current mode
+					const responses = this.modes[this.currentMode].responses;
+					response = responses[Math.floor(Math.random() * responses.length)];
+				}
+				
+				this.addMessage(response, 'ai');
+			}, 500);
+		}
+		
+		addMessage(text, type) {
+			const message = document.createElement('div');
+			message.className = `message ${type}`;
+			message.textContent = text;
+			
+			this.messages.appendChild(message);
+			this.messages.scrollTop = this.messages.scrollHeight;
+		}
+	}
+
+	// Initialize Chat Manager
+	const chatManager = new ChatManager();
+
+	// Donation Manager
+	class DonationManager {
+		constructor() {
+			this.button = document.getElementById('donationButton');
+			this.panel = document.getElementById('donationPanel');
+			this.copyButtons = document.querySelectorAll('.copy-button');
+			
+			this.init();
+		}
+		
+		init() {
+			// Toggle donation panel
+			this.button.addEventListener('click', () => {
+				this.panel.classList.toggle('active');
+				audioManager.playClickSound();
+			});
+			
+			// Close panel when clicking outside
+			document.addEventListener('click', (e) => {
+				if (!this.button.contains(e.target) && !this.panel.contains(e.target)) {
+					this.panel.classList.remove('active');
+				}
+			});
+			
+			// Copy address functionality
+			this.copyButtons.forEach(button => {
+				button.addEventListener('click', (e) => {
+					e.stopPropagation();
+					const address = button.dataset.address;
+					navigator.clipboard.writeText(address).then(() => {
+						const originalText = button.textContent;
+						button.textContent = 'Copied!';
+      setTimeout(() => {
+							button.textContent = originalText;
+						}, 2000);
+						audioManager.playClickSound();
+					});
+				});
+			});
+			
+			// Add hover sound
+			this.button.addEventListener('mouseenter', () => audioManager.playHoverSound());
+			this.copyButtons.forEach(button => {
+				button.addEventListener('mouseenter', () => audioManager.playHoverSound());
+			});
+		}
+	}
+
+	// Initialize Donation Manager
+	const donationManager = new DonationManager();
+	</script>
+</body>
+
+</html>
