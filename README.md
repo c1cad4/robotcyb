@@ -30,3 +30,8 @@ I create **games**, **systems**, **memes**, **farms**, **communities**, **vision
 ---
 
 **RobotCyb** is not just a project. It's a **digital meme** that turns the whole world into a game. Are you ready? To laugh, have fun, enjoy life, and create the future?
+
+
+## Экосистема cybOS
+
+[Роль проекта, команды и границы](docs/ECOSYSTEM.md) · [Карта всех компонентов](https://github.com/c1cad4/cybOS).
