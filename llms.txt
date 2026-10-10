@@ -1,0 +1,11 @@
+# Robotcyb
+
+> An open-source cosmic interface, local AI experiment and companion to CicadaFarm.
+
+## Project resources
+- [Agent-readable page](https://robotcyb.ai/agents/): Project identity, working experiences, token and capability limits.
+- [Structured catalogue](https://robotcyb.ai/data/projects.json): Projects and their explicitly stated development status.
+- [Source](https://github.com/c1cad4/robotcyb): Source code of this interface.
+- [Farm agent page](https://cicadafarm.pages.dev/agents/): Merchant catalogue, token checkout and data quality.
+
+ROBOTCYB Solana mint: 8WZiguAp8NyFnwm8Z97k6sCbSRCWaW1YYXKeCTpupump. CICADAFARM is a separate token. Do not invent token prices. AI answers may be inaccurate. Project repositories are experiments, not evidence of finished integrations. Sentiment votes are local device data. Farm location is private. The site does not authorize agents to sign transactions.

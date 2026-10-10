@@ -1,0 +1,1294 @@
+
+		#cyberCanvas {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 0;
+			width: 100vw;
+			height: 100vh;
+			pointer-events: none;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+			background: black;
+			font-family: 'Orbitron', sans-serif;
+			color: #00ff00;
+			overflow: hidden;
+		}
+
+		canvas {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			width: 100vw;
+			height: 100vh;
+			pointer-events: none;
+		}
+
+		.content {
+			position: relative;
+			z-index: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: flex-start;
+			min-height: 100vh;
+			padding: 50px;
+			box-sizing: border-box;
+			margin-top: 50px;
+		}
+
+		h1 {
+			font-size: 4em;
+			margin: 0.5em 0;
+			text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+			position: relative;
+		}
+
+		h1::after {
+			content: "ROBOTCYB";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			color: rgba(0, 255, 0, 0.3);
+			z-index: -1;
+			text-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+			transform: scale(1.05);
+		}
+
+		p {
+			font-size: 1.4em;
+			max-width: 800px;
+			margin: 0 auto 2em;
+			text-align: center;
+			line-height: 1.6;
+		}
+
+		.links,
+		.security-links,
+		.buy-links,
+		.market-links {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 15px;
+		}
+
+		.links a,
+		.security-links a,
+		.buy-links a,
+		.market-links a {
+			color: #00ff00;
+			background: rgba(0, 0, 0, 0.6);
+			padding: 8px 16px;
+			border: 1px solid #00ff00;
+			border-radius: 2px;
+			text-decoration: none;
+			font-weight: 500;
+			font-size: 12px;
+			transition: all 0.2s ease;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.links a:hover,
+		.security-links a:hover,
+		.buy-links a:hover,
+		.market-links a:hover {
+			background: rgba(0, 255, 0, 0.05);
+			color: #ffffff;
+			transform: translateY(-1px);
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+		}
+
+		.links a:active,
+		.security-links a:active,
+		.buy-links a:active,
+		.market-links a:active {
+			transform: translateY(1px);
+			box-shadow: 0 0 3px rgba(0, 255, 0, 0.1);
+		}
+
+		.social-links {
+			position: fixed;
+			bottom: 30px;
+			left: 30px;
+			z-index: 10;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		.social-links a {
+			color: #00ff00;
+			text-decoration: none;
+			font-size: 14px;
+			padding: 8px;
+			border: 1px solid #00ff00;
+			border-radius: 2px;
+			width: 32px;
+			height: 32px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.2s ease;
+			background: rgba(0, 0, 0, 0.6);
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
+		}
+
+		.social-links a:hover {
+			background: rgba(0, 255, 0, 0.05);
+			transform: scale(1.05);
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+		}
+
+		.security-links {
+			position: fixed;
+			top: 15px;
+			left: 15px;
+			z-index: 10;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+
+		.security-links a {
+			color: #00ff00;
+			background: rgba(0, 0, 0, 0.6);
+			padding: 4px 8px;
+			border: 1px solid #00ff00;
+			border-radius: 2px;
+			text-decoration: none;
+			font-weight: 500;
+			font-size: 10px;
+			transition: all 0.2s ease;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
+			position: relative;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
+		.security-links a:hover {
+			background: rgba(0, 255, 0, 0.05);
+			color: #ffffff;
+			transform: translateY(-1px);
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+		}
+
+		.buy-links {
+			position: fixed;
+			top: 30px;
+			right: 30px;
+			z-index: 10;
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+		}
+
+		.market-links {
+			position: fixed;
+			bottom: 30px;
+			right: 30px;
+			z-index: 10;
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+		}
+
+		.market-links h3 {
+			color: #00ff00;
+			font-size: 14px;
+			margin-bottom: 8px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-weight: 500;
+		}
+
+		.toast {
+			position: fixed;
+			top: 30px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: rgba(0, 255, 0, 0.9);
+			color: black;
+			padding: 15px 30px;
+			border-radius: 8px;
+			font-weight: bold;
+			font-size: 16px;
+			display: none;
+			z-index: 100;
+			box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+		}
+
+		/* Oracle AI Assistant Styles */
+		.oracle-button {
+			display: none;
+		}
+
+		.oracle-popup {
+			display: none;
+			position: fixed;
+			bottom: 20px;
+			left: 20px;
+			width: 400px;
+			height: 600px;
+			background: rgba(0, 0, 0, 0.9);
+			border: 1px solid rgba(0, 255, 0, 0.3);
+			border-radius: 10px;
+			z-index: 1000;
+			overflow: hidden;
+			backdrop-filter: blur(10px);
+			box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+		}
+
+		.oracle-chat {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			padding: 20px;
+			color: #00ff00;
+			font-family: 'Courier New', monospace;
+		}
+
+		.oracle-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 20px;
+			padding-bottom: 10px;
+			border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+		}
+
+		.oracle-title {
+			font-size: 1.2em;
+			font-weight: bold;
+		}
+
+		.oracle-modes {
+			display: flex;
+			gap: 10px;
+			margin-bottom: 20px;
+		}
+
+		.oracle-mode {
+			padding: 5px 10px;
+			background: rgba(0, 255, 0, 0.1);
+			border: 1px solid rgba(0, 255, 0, 0.3);
+			border-radius: 5px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.oracle-mode:hover {
+			background: rgba(0, 255, 0, 0.2);
+		}
+
+		.oracle-mode.active {
+			background: rgba(0, 255, 0, 0.3);
+		}
+
+		.oracle-messages {
+			flex-grow: 1;
+			overflow-y: auto;
+			margin-bottom: 20px;
+			padding-right: 10px;
+		}
+
+		.oracle-message {
+			margin-bottom: 15px;
+			opacity: 0;
+			transform: translateY(20px);
+			animation: messageAppear 0.5s forwards;
+		}
+
+		@keyframes messageAppear {
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.oracle-input {
+			display: flex;
+			gap: 10px;
+		}
+
+		.oracle-input input {
+			flex-grow: 1;
+			background: rgba(0, 255, 0, 0.1);
+			border: 1px solid rgba(0, 255, 0, 0.3);
+			border-radius: 5px;
+			padding: 10px;
+			color: #00ff00;
+			font-family: 'Courier New', monospace;
+		}
+
+		.oracle-input button {
+			background: rgba(0, 255, 0, 0.2);
+			border: 1px solid rgba(0, 255, 0, 0.3);
+			border-radius: 5px;
+			padding: 10px 20px;
+			color: #00ff00;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.oracle-input button:hover {
+			background: rgba(0, 255, 0, 0.3);
+		}
+
+		.oracle-close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			background: none;
+			border: none;
+			color: #00ff00;
+			cursor: pointer;
+			font-size: 1.2em;
+			opacity: 0.7;
+			transition: opacity 0.3s ease;
+		}
+
+		.oracle-close:hover {
+			opacity: 1;
+		}
+
+		#toggleMusic {
+			display: none;
+		}
+
+		@media (max-width: 1200px) {
+			h1 {
+				font-size: 3.5em;
+			}
+
+			p {
+				font-size: 1.2em;
+				max-width: 600px;
+			}
+
+			.links a,
+			.security-links a,
+			.buy-links a,
+			.market-links a {
+				padding: 12px 24px;
+				font-size: 14px;
+			}
+		}
+
+		@media (max-width: 768px) {
+			h1 {
+				font-size: 2.5em;
+			}
+
+			p {
+				font-size: 1em;
+				max-width: 90%;
+			}
+
+			.social-links {
+				bottom: 15px;
+				left: 15px;
+			}
+
+			.security-links {
+				top: 10px;
+				left: 10px;
+				gap: 6px;
+			}
+
+			.buy-links {
+				top: 15px;
+				right: 15px;
+			}
+
+			.market-links {
+				bottom: 15px;
+				right: 15px;
+			}
+
+			.oracle-button {
+				bottom: 15px;
+				left: 15px;
+				padding: 8px 16px;
+				font-size: 12px;
+			}
+
+			#toggleMusic.visible {
+				bottom: 15px;
+			}
+
+			.sliding-panel {
+				width: 140px;
+				height: 60px;
+			}
+
+			.sliding-panel-toggle {
+				height: 60px;
+				font-size: 9px;
+			}
+
+			.links a,
+			.security-links a,
+			.buy-links a,
+			.market-links a {
+				padding: 6px 12px;
+				font-size: 11px;
+			}
+
+			.social-links a {
+				width: 28px;
+				height: 28px;
+				font-size: 12px;
+			}
+
+			.security-links a {
+				padding: 3px 6px;
+				font-size: 9px;
+			}
+
+			.oracle-popup {
+				width: 300px;
+				height: 500px;
+				left: 15px;
+			}
+		}
+
+		/* Add styles for the sliding panel */
+		.sliding-panel {
+			display: none;
+		}
+
+		.sliding-panel-toggle {
+			display: none;
+		}
+
+		/* Update styles for the Community Sentiment component */
+		.sentiment-container {
+			position: fixed;
+			top: 50%;
+			right: 30px;
+			transform: translateY(-50%);
+			width: 200px;
+			background: rgba(0, 0, 0, 0.6);
+			border: 1px solid #00ff00;
+			border-radius: 2px;
+			padding: 10px;
+			z-index: 10;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.1);
+		}
+
+		.sentiment-title {
+			color: #00ff00;
+			font-size: 12px;
+			margin-bottom: 8px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-weight: 500;
+			position: relative;
+			cursor: help;
+		}
+
+		.sentiment-title:hover::after {
+			content: "Community Sentiment";
+			position: absolute;
+			bottom: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			background: rgba(0, 0, 0, 0.8);
+			color: #00ff00;
+			padding: 4px 8px;
+			border-radius: 2px;
+			font-size: 10px;
+			white-space: nowrap;
+			z-index: 100;
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
+		}
+
+		.sentiment-bar-container {
+			width: 100%;
+			height: 6px;
+			background: rgba(0, 0, 0, 0.5);
+			border: 1px solid #00ff00;
+			border-radius: 1px;
+			position: relative;
+			overflow: hidden;
+			margin-bottom: 8px;
+		}
+
+		.sentiment-bar {
+			height: 100%;
+			width: 50%;
+			background: linear-gradient(90deg, #8B4513, #00ff00);
+			position: absolute;
+			left: 0;
+			transition: width 0.5s ease, left 0.5s ease;
+		}
+
+		.sentiment-buttons {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			gap: 10px;
+		}
+
+		.sentiment-button {
+			background: rgba(0, 0, 0, 0.6);
+			border: 1px solid #00ff00;
+			color: #00ff00;
+			padding: 4px 8px;
+			border-radius: 2px;
+			cursor: pointer;
+			font-size: 12px;
+			transition: all 0.2s ease;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-width: 30px;
+			flex: 1;
+		}
+
+		.sentiment-button:hover {
+			background: rgba(0, 255, 0, 0.1);
+			transform: translateY(-1px);
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
+		}
+
+		.sentiment-button:active {
+			transform: translateY(1px);
+		}
+
+		.sentiment-stats {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			margin-top: 5px;
+			font-size: 9px;
+			color: #00ff00;
+		}
+
+		.sentiment-close {
+			display: none;
+			/* Hide the close button */
+		}
+
+		@media (max-width: 768px) {
+			.sentiment-container {
+				width: 150px;
+				padding: 8px;
+				right: 15px;
+			}
+
+			.sentiment-title {
+				font-size: 10px;
+			}
+
+			.sentiment-bar-container {
+				height: 4px;
+			}
+
+			.sentiment-button {
+				padding: 3px 6px;
+				font-size: 10px;
+				min-width: 25px;
+			}
+
+			.sentiment-stats {
+				font-size: 8px;
+			}
+		}
+
+		/* Remove music toggle styles and add theme toggle styles */
+		#themeToggle {
+			position: fixed;
+			bottom: 30px;
+			left: calc(50% - 60px);
+			/* Position it to the left of the ambient toggle */
+			transform: translateX(-50%);
+			background: rgba(0, 0, 0, 0.6);
+			color: #00ff00;
+			border: 1px solid #00ff00;
+			padding: 6px 12px;
+			border-radius: 2px;
+			cursor: pointer;
+			font-family: 'Orbitron', sans-serif;
+			font-weight: 500;
+			font-size: 12px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			transition: all 0.2s ease;
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
+			z-index: 10;
+		}
+
+		#themeToggle:hover {
+			background: rgba(0, 255, 0, 0.05);
+			color: #ffffff;
+			transform: translateX(-50%) translateY(-1px);
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+		}
+
+		#themeToggle:active {
+			transform: translateX(-50%) translateY(1px);
+		}
+
+		@media (max-width: 768px) {
+			#themeToggle {
+				bottom: 15px;
+				left: calc(50% - 45px);
+				/* Adjust for mobile */
+				font-size: 10px;
+				padding: 4px 8px;
+			}
+		}
+
+		body.light-theme {
+			background: #1a1a1a;
+			color: #ff00cc;
+		}
+
+		body.light-theme .content h1,
+		body.light-theme .content p,
+		body.light-theme .links a,
+		body.light-theme .security-links a,
+		body.light-theme .buy-links a,
+		body.light-theme .market-links a {
+			color: #ff00cc;
+			border-color: #ff00cc;
+			text-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
+		}
+
+		body.light-theme .links a:hover,
+		body.light-theme .security-links a:hover,
+		body.light-theme .buy-links a:hover,
+		body.light-theme .market-links a:hover {
+			background: rgba(255, 0, 204, 0.1);
+			box-shadow: 0 0 15px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .social-links a {
+			background: rgba(26, 26, 26, 0.8);
+			border: 1px solid #ff00cc;
+			box-shadow: 0 0 5px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .social-links a:hover {
+			background: rgba(255, 0, 204, 0.1);
+			box-shadow: 0 0 10px rgba(255, 0, 204, 0.5),
+				0 0 20px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .toast {
+			background: rgba(26, 26, 26, 0.9);
+			border: 1px solid #ff00cc;
+			box-shadow: 0 0 10px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .toast.success {
+			border-color: #ff00cc;
+		}
+
+		body.light-theme .toast.error {
+			border-color: #ff0066;
+		}
+
+		body.light-theme .toast-message {
+			color: #ffffff;
+		}
+
+		body.light-theme .toast-close {
+			color: #ff00cc;
+		}
+
+		body.light-theme .toast-close:hover {
+			color: #ffffff;
+			text-shadow: 0 0 5px rgba(255, 0, 204, 0.5);
+		}
+
+		body.light-theme .theme-toggle {
+			background: rgba(26, 26, 26, 0.8);
+			color: #ff00cc;
+			border: 1px solid #ff00cc;
+			box-shadow: 0 0 5px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .theme-toggle:hover {
+			background: rgba(255, 0, 204, 0.1);
+			color: #ffffff;
+			box-shadow: 0 0 10px rgba(255, 0, 204, 0.5),
+				0 0 20px rgba(255, 0, 204, 0.3);
+		}
+
+		/* Community Sentiment Light Theme */
+		body.light-theme .sentiment-container {
+			background: rgba(26, 26, 26, 0.8);
+			border: 1px solid #ff00cc;
+			box-shadow: 0 0 8px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .sentiment-title {
+			color: #ff00cc;
+			text-shadow: 0 0 5px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .sentiment-bar-container {
+			background: rgba(26, 26, 26, 0.8);
+			border: 1px solid #ff00cc;
+		}
+
+		body.light-theme .sentiment-bar {
+			background: linear-gradient(90deg, #ff0066, #ff00cc);
+			box-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
+		}
+
+		body.light-theme .sentiment-button {
+			background: rgba(26, 26, 26, 0.8);
+			border: 1px solid #ff00cc;
+			color: #ff00cc;
+			box-shadow: 0 0 5px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .sentiment-button:hover {
+			background: rgba(255, 0, 204, 0.1);
+			color: #ffffff;
+			box-shadow: 0 0 10px rgba(255, 0, 204, 0.5),
+				0 0 20px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .sentiment-stats {
+			color: #ff00cc;
+			text-shadow: 0 0 5px rgba(255, 0, 204, 0.3);
+		}
+
+		/* Add subtle background animation */
+		@keyframes pinkGlow {
+			0% {
+				background-position: 0% 50%;
+			}
+
+			50% {
+				background-position: 100% 50%;
+			}
+
+			100% {
+				background-position: 0% 50%;
+			}
+		}
+
+		body.light-theme::before {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(45deg,
+					rgba(255, 0, 204, 0.05),
+					rgba(255, 0, 102, 0.05),
+					rgba(255, 0, 204, 0.05));
+			background-size: 200% 200%;
+			animation: pinkGlow 15s ease infinite;
+			pointer-events: none;
+			z-index: -1;
+		}
+
+		/* Update styles for the ambient sound toggle button */
+		#ambientToggle {
+			position: fixed;
+			bottom: 30px;
+			left: calc(50% + 60px);
+			/* Position it to the right of the theme toggle */
+			transform: translateX(-50%);
+			background: rgba(0, 0, 0, 0.6);
+			color: #00ff00;
+			border: 1px solid #00ff00;
+			padding: 6px 12px;
+			border-radius: 2px;
+			cursor: pointer;
+			font-family: 'Orbitron', sans-serif;
+			font-weight: 500;
+			font-size: 12px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			transition: all 0.2s ease;
+			box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
+			z-index: 10;
+		}
+
+		#ambientToggle:hover {
+			background: rgba(0, 255, 0, 0.05);
+			color: #ffffff;
+			transform: translateX(-50%) translateY(-1px);
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+		}
+
+		#ambientToggle:active {
+			transform: translateX(-50%) translateY(1px);
+		}
+
+		/* Light theme styles for ambient toggle */
+		body.light-theme #ambientToggle {
+			color: #ff00cc;
+			background: rgba(26, 26, 26, 0.8);
+			border: 1px solid #ff00cc;
+			box-shadow: 0 0 5px rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme #ambientToggle:hover {
+			background: rgba(255, 0, 204, 0.1);
+			color: #ffffff;
+			box-shadow: 0 0 10px rgba(255, 0, 204, 0.5),
+				0 0 20px rgba(255, 0, 204, 0.3);
+		}
+
+		@media (max-width: 768px) {
+			#ambientToggle {
+				bottom: 15px;
+				left: calc(50% + 45px);
+				/* Adjust for mobile */
+				font-size: 10px;
+				padding: 4px 8px;
+			}
+		}
+
+		#oracle-canvas {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+			pointer-events: none;
+			mix-blend-mode: screen;
+		}
+
+		.oracle-core {
+			position: fixed;
+			width: 20px;
+			/* Reduced from 30px */
+			height: 20px;
+			/* Reduced from 30px */
+			background: radial-gradient(circle at center,
+					rgba(0, 255, 0, 0.3) 0%,
+					rgba(0, 255, 0, 0.15) 40%,
+					rgba(0, 255, 0, 0) 70%);
+			border-radius: 50%;
+			pointer-events: none;
+			z-index: 2;
+			mix-blend-mode: screen;
+			filter: blur(3px);
+			/* Reduced blur */
+			opacity: 0.5;
+			/* Reduced opacity */
+			transition: transform 0.1s ease-out;
+			box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+			/* Reduced glow */
+		}
+
+		#musicToggle {
+			position: fixed;
+			bottom: 15px;
+			right: 15px;
+			background: rgba(0, 0, 0, 0.6);
+			color: #00ff00;
+			border: 1px solid #00ff00;
+			padding: 8px;
+			border-radius: 2px;
+			cursor: pointer;
+			font-family: 'Orbitron', sans-serif;
+			font-size: 16px;
+			transition: all 0.3s ease;
+			z-index: 100;
+			width: 32px;
+			height: 32px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		#musicToggle:hover {
+			background: rgba(0, 255, 0, 0.1);
+			transform: scale(1.1);
+		}
+
+		body.light-theme #musicToggle {
+			color: #ff00cc;
+			border-color: #ff00cc;
+		}
+
+		/* Chat Interface Styles */
+		.chat-container {
+			position: fixed;
+			left: -150px; /* Start hidden */
+			top: 50%;
+			transform: translateY(-50%);
+			width: 150px;
+			height: 250px;
+			background: rgba(0, 0, 0, 0.8);
+			border: 1px solid #00ff00;
+			border-radius: 10px;
+			z-index: 1000;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+			box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+			transition: left 0.3s ease;
+		}
+
+		.chat-container:hover {
+			left: 20px; /* Show on hover */
+		}
+
+		/* Add a visible handle when chat is hidden */
+		.chat-container::before {
+			content: "💬";
+			position: absolute;
+			right: -30px;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 30px;
+			height: 30px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: rgba(0, 0, 0, 0.8);
+			border: 1px solid #00ff00;
+			border-radius: 5px;
+			color: #00ff00;
+			font-size: 12px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.chat-container:hover::before {
+			background: rgba(0, 255, 0, 0.1);
+		}
+
+		/* Light theme styles for chat handle */
+		body.light-theme .chat-container::before {
+			background: rgba(26, 26, 26, 0.8);
+			border-color: #ff00cc;
+			color: #ff00cc;
+		}
+
+		body.light-theme .chat-container:hover::before {
+			background: rgba(255, 0, 204, 0.1);
+		}
+
+		.chat-header {
+			padding: 8px; /* Reduced from 15px */
+			background: rgba(0, 255, 0, 0.1);
+			border-bottom: 1px solid #00ff00;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.chat-title {
+			color: #00ff00;
+			font-size: 0.9em; /* Reduced from 1.2em */
+			font-weight: bold;
+		}
+
+		.chat-messages {
+			flex-grow: 1;
+			padding: 8px; /* Reduced from 15px */
+			overflow-y: auto;
+			display: flex;
+			flex-direction: column;
+			gap: 6px; /* Reduced from 10px */
+		}
+
+		.message {
+			max-width: 80%;
+			padding: 6px; /* Reduced from 10px */
+			border-radius: 6px; /* Reduced from 10px */
+			color: #00ff00;
+			font-size: 0.7em; /* Reduced from 0.9em */
+			line-height: 1.3; /* Reduced from 1.4 */
+		}
+
+		.message.ai {
+			align-self: flex-start;
+			background: rgba(0, 255, 0, 0.1);
+			border: 1px solid rgba(0, 255, 0, 0.3);
+		}
+
+		.message.agent {
+			align-self: flex-end;
+			background: rgba(0, 255, 0, 0.2);
+			border: 1px solid rgba(0, 255, 0, 0.4);
+		}
+
+		.chat-input {
+			padding: 8px; /* Reduced from 15px */
+			background: rgba(0, 0, 0, 0.5);
+			border-top: 1px solid #00ff00;
+			display: flex;
+			gap: 6px; /* Reduced from 10px */
+		}
+
+		.chat-input input {
+			flex-grow: 1;
+			background: rgba(0, 255, 0, 0.1);
+			border: 1px solid #00ff00;
+			border-radius: 3px; /* Reduced from 5px */
+			padding: 4px; /* Reduced from 8px */
+			color: #00ff00;
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.7em; /* Added font size */
+		}
+
+		.chat-input button {
+			background: rgba(0, 255, 0, 0.2);
+			border: 1px solid #00ff00;
+			border-radius: 3px; /* Reduced from 5px */
+			padding: 4px 8px; /* Reduced from 8px 15px */
+			color: #00ff00;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-size: 0.7em; /* Added font size */
+		}
+
+		.chat-input button:hover {
+			background: rgba(0, 255, 0, 0.3);
+		}
+
+		.chat-close {
+			background: none;
+			border: none;
+			color: #00ff00;
+			cursor: pointer;
+			font-size: 1.2em;
+			
+			opacity: 0.7;
+			transition: opacity 0.3s ease;
+		}
+
+		.chat-close:hover {
+			opacity: 1;
+		}
+
+		/* Light theme styles for chat */
+		body.light-theme .chat-container {
+			background: rgba(26, 26, 26, 0.8);
+			border-color: #ff00cc;
+			box-shadow: 0 0 20px rgba(255, 0, 204, 0.2);
+		}
+
+		body.light-theme .chat-header {
+			background: rgba(255, 0, 204, 0.1);
+			border-bottom-color: #ff00cc;
+		}
+
+		body.light-theme .chat-title {
+			color: #ff00cc;
+		}
+
+		body.light-theme .message {
+			color: #ff00cc;
+		}
+
+		body.light-theme .message.ai {
+			background: rgba(255, 0, 204, 0.1);
+			border-color: rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .message.agent {
+			background: rgba(255, 0, 204, 0.2);
+			border-color: rgba(255, 0, 204, 0.4);
+		}
+
+		body.light-theme .chat-input {
+			background: rgba(26, 26, 26, 0.5);
+			border-top-color: #ff00cc;
+		}
+
+		body.light-theme .chat-input input {
+			background: rgba(255, 0, 204, 0.1);
+			border-color: #ff00cc;
+			color: #ff00cc;
+		}
+
+		body.light-theme .chat-input button {
+			background: rgba(255, 0, 204, 0.2);
+			border-color: #ff00cc;
+			color: #ff00cc;
+		}
+
+		body.light-theme .chat-input button:hover {
+			background: rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .chat-close {
+			color: #ff00cc;
+		}
+
+		/* Add donation button styles */
+		.donation-button {
+			position: fixed;
+			bottom: 30px;
+			left: 80px; /* Changed from 50px to 80px to move away from X icon */
+			background: rgba(0, 0, 0, 0.6);
+			color: #00ff00;
+			border: 1px solid #00ff00;
+			padding: 6px 13px;
+			border-radius: 2px;
+			cursor: pointer;
+			font-family: 'Orbitron', sans-serif;
+			font-size: 10px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			transition: all 0.3s ease;
+			z-index: 1000;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.donation-button:hover {
+			background: rgba(0, 255, 0, 0.1);
+			transform: translateY(-1px);
+			box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+		}
+
+		.donation-panel {
+			position: fixed;
+			bottom: 80px;
+			left: 80px; /* Changed from 50px to 80px to move away from X icon */
+			background: rgba(0, 0, 0, 0.9);
+			border: 1px solid #00ff00;
+			border-radius: 2px;
+			padding: 12px;
+			width: 240px;
+			display: none;
+			z-index: 1000;
+			box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+		}
+
+		.donation-panel.active {
+			display: block;
+		}
+
+		.donation-title {
+			color: #00ff00;
+			font-size: 12px;
+			margin-bottom: 8px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		.wallet-address {
+			background: rgba(0, 255, 0, 0.1);
+			border: 1px solid rgba(0, 255, 0, 0.3);
+			padding: 6px;
+			margin-bottom: 6px;
+			font-size: 9px;
+			word-break: break-all;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.wallet-address span {
+			color: #00ff00;
+		}
+
+		.copy-button {
+			background: none;
+			border: 1px solid #00ff00;
+			color: #00ff00;
+			padding: 1px 5px;
+			font-size: 8px;
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+
+		.copy-button:hover {
+			background: rgba(0, 255, 0, 0.1);
+		}
+
+		/* Light theme styles for donation */
+		body.light-theme .donation-button {
+			color: #ff00cc;
+			border-color: #ff00cc;
+		}
+
+		body.light-theme .donation-button:hover {
+			background: rgba(255, 0, 204, 0.1);
+			box-shadow: 0 0 8px rgba(255, 0, 204, 0.2);
+		}
+
+		body.light-theme .donation-panel {
+			background: rgba(26, 26, 26, 0.9);
+			border-color: #ff00cc;
+			box-shadow: 0 0 20px rgba(255, 0, 204, 0.2);
+		}
+
+		body.light-theme .donation-title {
+			color: #ff00cc;
+		}
+
+		body.light-theme .wallet-address {
+			background: rgba(255, 0, 204, 0.1);
+			border-color: rgba(255, 0, 204, 0.3);
+		}
+
+		body.light-theme .wallet-address span {
+			color: #ff00cc;
+		}
+
+		body.light-theme .copy-button {
+			border-color: #ff00cc;
+			color: #ff00cc;
+		}
+
+		body.light-theme .copy-button:hover {
+			background: rgba(255, 0, 204, 0.1);
+		}
+
+		@media (max-width: 768px) {
+			.donation-button {
+				bottom: 15px;
+				left: 65px; /* Changed from 35px to 65px to move away from X icon */
+				padding: 5px 10px;
+				font-size: 8px;
+			}
+
+			.donation-panel {
+				bottom: 65px;
+				left: 65px; /* Changed from 35px to 65px to move away from X icon */
+				width: 200px;
+				padding: 8px;
+			}
+
+			.donation-title {
+				font-size: 10px;
+			}
+
+			.wallet-address {
+				padding: 5px;
+				font-size: 8px;
+			}
+
+			.copy-button {
+				padding: 1px 3px;
+				font-size: 7px;
+			}
+		}
+	
