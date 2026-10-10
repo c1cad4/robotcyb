@@ -1,0 +1,24 @@
+/* Educational concept configurator. Values are scenario assumptions, not a verified BOM. */
+(function(root){
+const parts=[
+ {id:'shell',name:'01 · Orbital shell',hint:'Keep the glowing oval silhouette. Open ducts and a removable shell keep the concept serviceable.',options:[{id:'light',name:'Light oval cage',g:160,w:0},{id:'halo',name:'Transparent halo cage',g:240,w:0}]},
+ {id:'brain',name:'02 · AI brain',hint:'Jetson runs vision and assistant software. It is a companion computer, not the flight controller.',options:[{id:'nano',name:'Jetson Nano · legacy concept',g:170,w:10},{id:'orin',name:'Jetson Orin Nano · efficient concept',g:210,w:7},{id:'super',name:'Jetson Orin Nano · performance concept',g:250,w:25}]},
+ {id:'vision',name:'03 · Vision',hint:'Place a camera in the central eye. Use a depth sensor for a later perception experiment.',options:[{id:'rgb',name:'RGB eye camera',g:25,w:2},{id:'depth',name:'RGB + depth camera',g:85,w:5}]},
+ {id:'glow',name:'04 · Living light',hint:'A diffused LED halo recreates the image. Keep cooling vents open.',options:[{id:'ring',name:'Mint LED ring',g:25,w:2},{id:'nebula',name:'RGB nebula diffuser',g:45,w:5}]},
+ {id:'flight',name:'05 · Movement',hint:'Start with a desktop assistant, or explore a four-rotor guarded flight concept.',options:[{id:'desk',name:'Desktop prototype · no flight',g:40,w:0,lift:0},{id:'light',name:'Four guarded rotors · light concept',g:260,w:110,lift:2200},{id:'strong',name:'Four guarded rotors · larger concept',g:420,w:170,lift:3000}]},
+ {id:'control',name:'06 · Flight control',hint:'Separate flight control from AI. The assistant proposes actions; the controller manages the vehicle.',options:[{id:'px4',name:'PX4-class controller + sensors',g:55,w:2},{id:'bench',name:'Bench controller · desktop only',g:25,w:1}]},
+ {id:'battery',name:'07 · Energy',hint:'Choose an enclosed battery concept. Larger capacity also adds mass; real parts require a matched design.',options:[{id:'compact',name:'Compact Li-ion pack · 30 Wh assumption',g:180,w:0,wh:30,chem:'liion'},{id:'endurance',name:'Larger Li-ion pack · 50 Wh assumption',g:300,w:0,wh:50,chem:'liion'},{id:'lipo',name:'LiPo pack · 40 Wh assumption',g:260,w:0,wh:40,chem:'lipo'}]},
+ {id:'voice',name:'08 · Assistant',hint:'A microphone, speaker and local software are a starting point for conversation, not proof of a complete assistant.',options:[{id:'voice',name:'Microphone + speaker + cooling',g:70,w:4},{id:'silent',name:'Quiet vision assistant + cooling',g:45,w:2}]},
+ {id:'dock',name:'09 · Build the dock',hint:'Assemble a cradle around an off-the-shelf matched charger. This game does not provide a mains wiring circuit.',options:[{id:'cradle',name:'Manual landing cradle',g:0,w:0},{id:'beacon',name:'Beacon cradle · alignment concept',g:0,w:0}]},
+ {id:'charger',name:'10 · Charging module',hint:'Match battery chemistry, cell count, voltage and current to the manufacturer specifications. A BMS does not replace a charger.',options:[{id:'liion',name:'Matched Li-ion charger module',g:0,w:0,chem:'liion'},{id:'lipo',name:'Matched LiPo balance charger',g:0,w:0,chem:'lipo'}]}
+];
+function sanitize(input){const result={};for(const part of parts){if(part.options.some(option=>option.id===input?.[part.id]))result[part.id]=input[part.id];}return result;}
+function inspect(input){const build=sanitize(input),selected=parts.map(p=>p.options.find(o=>o.id===build[p.id])).filter(Boolean),complete=selected.length===parts.length,mass=selected.reduce((sum,p)=>sum+p.g,0),watts=selected.reduce((sum,p)=>sum+p.w,0),flight=parts.find(p=>p.id==='flight').options.find(o=>o.id===build.flight),battery=parts.find(p=>p.id==='battery').options.find(o=>o.id===build.battery),charger=parts.find(p=>p.id==='charger').options.find(o=>o.id===build.charger),issues=[];
+if(!complete)issues.push('Finish all ten modules before running the simulation.');
+if(battery&&charger&&battery.chem!==charger.chem)issues.push('Battery and charger chemistry do not match. Choose the matching charging module.');
+if(flight?.lift&&build.control==='bench')issues.push('A flying concept needs a separate flight controller. Switch from bench to PX4-class control.');
+if(flight?.lift&&mass*1.8>flight.lift)issues.push('This game scenario has insufficient lift margin. Try a lighter build or larger rotors.');
+return {build,count:selected.length,complete,mass,watts,mode:flight?.lift?'flight':'desktop',minutes:battery&&watts?Math.floor(battery.wh*.7/watts*60):null,issues,ready:complete&&issues.length===0};}
+function starter(){return {shell:'halo',brain:'orin',vision:'rgb',glow:'nebula',flight:'light',control:'px4',battery:'compact',voice:'voice',dock:'beacon',charger:'liion'};}
+const core={parts,sanitize,inspect,starter};root.RobotBuildCore=core;if(typeof module==='object'&&module.exports)module.exports=core;
+})(typeof window==='object'?window:globalThis);

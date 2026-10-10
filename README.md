@@ -48,3 +48,7 @@ The 2026 hub presents the project, ecosystem and token tools in a responsive lay
 See [architecture](docs/ARCHITECTURE.md). Local AI warms up in a worker; WebGPU support is required for inference. A factual project guide remains usable while downloading or on unsupported devices. Agent resources: `/agents/`, `/data/projects.json`, `/llms.txt`.
 
 Run checks with `node --test tests/*.test.cjs`. Serve locally with `python3 -m http.server 8766`.
+
+## Build Robotcyb
+
+The BUILD mini-game lets visitors assemble ten modules, choose the glow colour, compare educational mass/power scenarios, build a dock, run a simulated mission and export a concept JSON. Progress stays on the visitor's device. The creator's visual reference is preserved unchanged. These are conceptual designs; no physical aircraft, camera, microphone or charging circuit is controlled.

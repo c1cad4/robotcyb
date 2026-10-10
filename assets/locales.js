@@ -2518,5 +2518,430 @@ window.FarmTranslations = [
   "Main navigation",
   "Главная навигация",
   "主导航"
+ ],
+ [
+  "Build",
+  "Собрать",
+  "组装"
+ ],
+ [
+  "Born as a meme. Growing toward a useful reality.",
+  "Начался как мем. Стремится стать полезной реальностью.",
+  "始于一个迷因，迈向有用的现实。"
+ ],
+ [
+  "PLAY · ASSEMBLE · EXPLORE",
+  "ИГРАЙ · СОБИРАЙ · ИССЛЕДУЙ",
+  "游玩 · 组装 · 探索"
+ ],
+ [
+  "Build your Robotcyb",
+  "Собери своего Robotcyb",
+  "组装你的 Robotcyb"
+ ],
+ [
+  "From a meme to a useful reality. Assemble the first concept, give it light, and build a home where it can recharge.",
+  "От мема к полезной реальности. Собери первый концепт, добавь свечение и создай станцию для подзарядки.",
+  "从迷因走向有用的现实。组装第一个概念原型，点亮它，并建造充电站。"
+ ],
+ [
+  "Robotcyb visual reference supplied by the project creator",
+  "Образ Robotcyb, предоставленный автором проекта",
+  "项目作者提供的 Robotcyb 视觉参考"
+ ],
+ [
+  "THE ORIGINAL VISION",
+  "ИСХОДНЫЙ ОБРАЗ",
+  "最初的愿景"
+ ],
+ [
+  "Interactive Robotcyb prototype and charging dock",
+  "Интерактивный прототип Robotcyb и зарядная станция",
+  "交互式 Robotcyb 原型与充电底座"
+ ],
+ [
+  "YOUR ORBITAL PROTOTYPE",
+  "ТВОЙ ОРБИТАЛЬНЫЙ ПРОТОТИП",
+  "你的轨道原型"
+ ],
+ [
+  "DOCKING · SIMULATION",
+  "СТЫКОВКА · СИМУЛЯЦИЯ",
+  "对接 · 模拟"
+ ],
+ [
+  "MISSION · SIMULATION",
+  "МИССИЯ · СИМУЛЯЦИЯ",
+  "任务 · 模拟"
+ ],
+ [
+  "Glow colour",
+  "Цвет свечения",
+  "光效颜色"
+ ],
+ [
+  "Mint",
+  "Мятный",
+  "薄荷绿"
+ ],
+ [
+  "Cyan",
+  "Голубой",
+  "青色"
+ ],
+ [
+  "Violet",
+  "Фиолетовый",
+  "紫色"
+ ],
+ [
+  "modules assembled",
+  "модулей собрано",
+  "已组装模块"
+ ],
+ [
+  "scenario mass",
+  "масса в сценарии",
+  "情景质量"
+ ],
+ [
+  "scenario draw",
+  "мощность в сценарии",
+  "情景功耗"
+ ],
+ [
+  "scenario energy estimate",
+  "расчёт энергии в сценарии",
+  "情景续航估算"
+ ],
+ [
+  "Illustrative game values, not measured hardware specifications. Energy estimate uses 70% of assumed battery capacity; real flight time is unknown.",
+  "Учебные значения игры, не измеренные характеристики деталей. Расчёт использует 70% условной ёмкости батареи; реальное время полёта неизвестно.",
+  "游戏数据仅为示例，并非硬件测量值。续航估算采用假定电池容量的 70%；真实飞行时间未知。"
+ ],
+ [
+  "Simulation complete: Robotcyb explored, returned to the cradle and recharged.",
+  "Симуляция завершена: Robotcyb исследовал мир, вернулся на станцию и подзарядился.",
+  "模拟完成：Robotcyb 完成探索、返回底座并充电。"
+ ],
+ [
+  "Return to the dock. Align the cradle and simulate charging.",
+  "Возвращение на станцию. Совмещение с посадочным местом и симуляция зарядки.",
+  "返回底座，对准停机位并模拟充电。"
+ ],
+ [
+  "Simulated hover: camera scans the garden. AI suggests; the flight controller handles motion.",
+  "Учебное зависание: камера осматривает сад. ИИ предлагает действия, полётный контроллер управляет движением.",
+  "模拟悬停：摄像头观察菜园。AI 提出建议，飞控负责运动控制。"
+ ],
+ [
+  "Desktop mission: camera observes the garden and the assistant offers a suggestion.",
+  "Настольная миссия: камера наблюдает за садом, а помощник предлагает действие.",
+  "桌面任务：摄像头观察菜园，助手给出建议。"
+ ],
+ [
+  "Choose modules to bring your orbital assistant to life.",
+  "Выбирай модули, чтобы оживить орбитального помощника.",
+  "选择模块，唤醒你的轨道助手。"
+ ],
+ [
+  "Run mission",
+  "Запустить миссию",
+  "运行任务"
+ ],
+ [
+  "Save blueprint",
+  "Скачать концепт",
+  "保存设计"
+ ],
+ [
+  "Assembly progress",
+  "Прогресс сборки",
+  "组装进度"
+ ],
+ [
+  "INSTALLED",
+  "УСТАНОВЛЕНО",
+  "已安装"
+ ],
+ [
+  "INSTALL MODULE",
+  "УСТАНОВИТЬ МОДУЛЬ",
+  "安装模块"
+ ],
+ [
+  "Previous",
+  "Назад",
+  "上一步"
+ ],
+ [
+  "Next module",
+  "Следующий модуль",
+  "下一模块"
+ ],
+ [
+  "Load first prototype",
+  "Загрузить первый прототип",
+  "载入初始原型"
+ ],
+ [
+  "Start again",
+  "Начать заново",
+  "重新开始"
+ ],
+ [
+  "How this could become real",
+  "Как воплотить это в реальности",
+  "如何成为现实"
+ ],
+ [
+  "First build a desktop halo with a camera, LEDs, cooling and a voice interface. Then develop a guarded flying platform around a separate flight controller. Validate total mass, thrust, power, cooling and centre of gravity with actual parts.",
+  "Сначала собери настольное ядро с камерой, светодиодами, охлаждением и голосовым интерфейсом. Затем разрабатывай защищённую летающую платформу с отдельным полётным контроллером. Массу, тягу, питание, охлаждение и центр тяжести нужно проверить на настоящих деталях.",
+  "先构建带摄像头、LED、散热和语音接口的桌面光环，再开发配有独立飞控的防护飞行平台。使用真实零件验证总质量、推力、功耗、散热与重心。"
+ ],
+ [
+  "The dock is a landing cradle, an alignment beacon and a manufacturer-matched charging module. Autonomous landing and electrical contact verification remain development tasks. The game does not control a physical aircraft or charger.",
+  "Станция — посадочное место, маяк совмещения и совместимый готовый зарядный модуль. Автоматическая посадка и проверка контактов ещё требуют разработки. Игра не управляет настоящим летательным аппаратом или зарядным устройством.",
+  "底座由停机支架、对准信标和厂商匹配的充电模块组成。自主降落和触点验证仍需研发。游戏不控制真实飞行器或充电器。"
+ ],
+ [
+  "Your build is saved on this device. The blueprint is a concept, not a certified flight design or a shopping list.",
+  "Сборка сохраняется на этом устройстве. Файл — концепт, а не сертифицированный проект полёта или список покупок.",
+  "组装方案保存在本设备。设计文件是概念方案，并非经过认证的飞行设计或采购清单。"
+ ],
+ [
+  "Finish all ten modules before running the simulation.",
+  "Собери все десять модулей перед запуском симуляции.",
+  "启动模拟前请完成全部十个模块。"
+ ],
+ [
+  "Battery and charger chemistry do not match. Choose the matching charging module.",
+  "Тип батареи не совпадает с зарядным модулем. Выбери соответствующий модуль.",
+  "电池与充电器类型不匹配。请选择匹配的充电模块。"
+ ],
+ [
+  "A flying concept needs a separate flight controller. Switch from bench to PX4-class control.",
+  "Летающему концепту нужен отдельный полётный контроллер. Выбери контроллер класса PX4.",
+  "飞行概念需要独立飞控。请将桌面控制器换为 PX4 类飞控。"
+ ],
+ [
+  "This game scenario has insufficient lift margin. Try a lighter build or larger rotors.",
+  "В игровом сценарии недостаточный запас тяги. Попробуй облегчить сборку или выбрать большие роторы.",
+  "此游戏情景的推力余量不足。请尝试更轻的配置或更大的旋翼。"
+ ],
+ [
+  "01 · Orbital shell",
+  "01 · Орбитальный корпус",
+  "01 · 轨道外壳"
+ ],
+ [
+  "Keep the glowing oval silhouette. Open ducts and a removable shell keep the concept serviceable.",
+  "Сохрани светящийся овальный силуэт. Открытые каналы и съёмный корпус упрощают обслуживание концепта.",
+  "保留发光的椭圆轮廓。开放风道与可拆外壳便于维护。"
+ ],
+ [
+  "Light oval cage",
+  "Лёгкий овальный каркас",
+  "轻量椭圆框架"
+ ],
+ [
+  "Transparent halo cage",
+  "Прозрачный каркас-ореол",
+  "透明光环框架"
+ ],
+ [
+  "02 · AI brain",
+  "02 · Мозг ИИ",
+  "02 · AI 大脑"
+ ],
+ [
+  "Jetson runs vision and assistant software. It is a companion computer, not the flight controller.",
+  "Jetson обрабатывает зрение и программу помощника. Это бортовой компьютер, а не полётный контроллер.",
+  "Jetson 运行视觉与助手软件。它是伴随计算机，不是飞控。"
+ ],
+ [
+  "Jetson Nano · legacy concept",
+  "Jetson Nano · ранний концепт",
+  "Jetson Nano · 早期概念"
+ ],
+ [
+  "Jetson Orin Nano · efficient concept",
+  "Jetson Orin Nano · экономичный концепт",
+  "Jetson Orin Nano · 节能概念"
+ ],
+ [
+  "Jetson Orin Nano · performance concept",
+  "Jetson Orin Nano · мощный концепт",
+  "Jetson Orin Nano · 性能概念"
+ ],
+ [
+  "03 · Vision",
+  "03 · Зрение",
+  "03 · 视觉"
+ ],
+ [
+  "Place a camera in the central eye. Use a depth sensor for a later perception experiment.",
+  "Помести камеру в центральный глаз. Датчик глубины можно добавить для будущих экспериментов со зрением.",
+  "将摄像头放在中央眼睛位置。后续感知实验可增加深度传感器。"
+ ],
+ [
+  "RGB eye camera",
+  "Цветная камера-глаз",
+  "RGB 眼睛摄像头"
+ ],
+ [
+  "RGB + depth camera",
+  "Цветная камера и датчик глубины",
+  "RGB 与深度摄像头"
+ ],
+ [
+  "04 · Living light",
+  "04 · Живой свет",
+  "04 · 生命之光"
+ ],
+ [
+  "A diffused LED halo recreates the image. Keep cooling vents open.",
+  "Рассеянное светодиодное кольцо повторяет образ. Не закрывай вентиляционные отверстия.",
+  "漫射 LED 光环重现视觉形象。保持散热孔畅通。"
+ ],
+ [
+  "Mint LED ring",
+  "Мятное светодиодное кольцо",
+  "薄荷绿 LED 光环"
+ ],
+ [
+  "RGB nebula diffuser",
+  "RGB-свечение туманности",
+  "RGB 星云漫射灯"
+ ],
+ [
+  "05 · Movement",
+  "05 · Движение",
+  "05 · 运动"
+ ],
+ [
+  "Start with a desktop assistant, or explore a four-rotor guarded flight concept.",
+  "Начни с настольного помощника или исследуй концепт полёта с четырьмя защищёнными роторами.",
+  "从桌面助手开始，或探索配备四个防护旋翼的飞行概念。"
+ ],
+ [
+  "Desktop prototype · no flight",
+  "Настольный прототип · без полёта",
+  "桌面原型 · 无飞行"
+ ],
+ [
+  "Four guarded rotors · light concept",
+  "Четыре защищённых ротора · лёгкий концепт",
+  "四个防护旋翼 · 轻型概念"
+ ],
+ [
+  "Four guarded rotors · larger concept",
+  "Четыре защищённых ротора · большой концепт",
+  "四个防护旋翼 · 大型概念"
+ ],
+ [
+  "06 · Flight control",
+  "06 · Управление полётом",
+  "06 · 飞行控制"
+ ],
+ [
+  "Separate flight control from AI. The assistant proposes actions; the controller manages the vehicle.",
+  "Раздели ИИ и управление полётом. Помощник предлагает действия, контроллер управляет аппаратом.",
+  "将 AI 与飞控分离。助手提出行动建议，飞控管理飞行器。"
+ ],
+ [
+  "PX4-class controller + sensors",
+  "Контроллер класса PX4 и датчики",
+  "PX4 类飞控与传感器"
+ ],
+ [
+  "Bench controller · desktop only",
+  "Настольный контроллер · без полёта",
+  "桌面控制器 · 仅限桌面"
+ ],
+ [
+  "07 · Energy",
+  "07 · Энергия",
+  "07 · 能源"
+ ],
+ [
+  "Choose an enclosed battery concept. Larger capacity also adds mass; real parts require a matched design.",
+  "Выбери закрытый аккумуляторный модуль. Большая ёмкость увеличивает массу; реальные детали требуют совместимого проекта.",
+  "选择封装电池概念。更大容量也增加质量，真实零件需要匹配设计。"
+ ],
+ [
+  "Compact Li-ion pack · 30 Wh assumption",
+  "Компактный Li-ion · условные 30 Вт·ч",
+  "紧凑 Li-ion 电池 · 假设 30 Wh"
+ ],
+ [
+  "Larger Li-ion pack · 50 Wh assumption",
+  "Большой Li-ion · условные 50 Вт·ч",
+  "大型 Li-ion 电池 · 假设 50 Wh"
+ ],
+ [
+  "LiPo pack · 40 Wh assumption",
+  "LiPo · условные 40 Вт·ч",
+  "LiPo 电池 · 假设 40 Wh"
+ ],
+ [
+  "08 · Assistant",
+  "08 · Помощник",
+  "08 · 助手"
+ ],
+ [
+  "A microphone, speaker and local software are a starting point for conversation, not proof of a complete assistant.",
+  "Микрофон, динамик и локальная программа — начало разговорного помощника, а не подтверждение готовой системы.",
+  "麦克风、扬声器与本地软件是对话助手的起点，不代表完整系统已完成。"
+ ],
+ [
+  "Microphone + speaker + cooling",
+  "Микрофон, динамик и охлаждение",
+  "麦克风、扬声器与散热"
+ ],
+ [
+  "Quiet vision assistant + cooling",
+  "Тихий помощник со зрением и охлаждением",
+  "静音视觉助手与散热"
+ ],
+ [
+  "09 · Build the dock",
+  "09 · Собери станцию",
+  "09 · 组装底座"
+ ],
+ [
+  "Assemble a cradle around an off-the-shelf matched charger. This game does not provide a mains wiring circuit.",
+  "Собери посадочное место вокруг готового совместимого зарядного устройства. Игра не содержит схемы подключения к электросети.",
+  "围绕现成匹配的充电器组装支架。游戏不提供市电接线电路。"
+ ],
+ [
+  "Manual landing cradle",
+  "Станция с ручной посадкой",
+  "手动降落底座"
+ ],
+ [
+  "Beacon cradle · alignment concept",
+  "Станция с маяком · концепт совмещения",
+  "信标底座 · 对准概念"
+ ],
+ [
+  "10 · Charging module",
+  "10 · Зарядный модуль",
+  "10 · 充电模块"
+ ],
+ [
+  "Match battery chemistry, cell count, voltage and current to the manufacturer specifications. A BMS does not replace a charger.",
+  "Тип батареи, число ячеек, напряжение и ток должны соответствовать спецификации производителя. BMS не заменяет зарядное устройство.",
+  "根据厂商规格匹配电池类型、电芯数量、电压与电流。BMS 不能代替充电器。"
+ ],
+ [
+  "Matched Li-ion charger module",
+  "Совместимый зарядный модуль Li-ion",
+  "匹配的 Li-ion 充电模块"
+ ],
+ [
+  "Matched LiPo balance charger",
+  "Совместимое балансировочное зарядное устройство LiPo",
+  "匹配的 LiPo 平衡充电器"
  ]
 ];

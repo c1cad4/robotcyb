@@ -9,3 +9,6 @@
 - [Farm agent page](https://cicadafarm.pages.dev/agents/): Merchant catalogue, token checkout and data quality.
 
 ROBOTCYB Solana mint: 8WZiguAp8NyFnwm8Z97k6sCbSRCWaW1YYXKeCTpupump. CICADAFARM is a separate token. Do not invent token prices. AI answers may be inaccurate. Project repositories are experiments, not evidence of finished integrations. Sentiment votes are local device data. Farm location is private. The site does not authorize agents to sign transactions.
+
+## Prototype builder
+- [Build Robotcyb](https://robotcyb.ai/#build): Educational ten-module robot and dock game. Local saved builds, compatibility checks and concept JSON export. No physical vehicle or charger control; scenario values are illustrative. Robotcyb is a meme aspiring to useful reality, not a claim of a completed physical robot.

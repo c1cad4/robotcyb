@@ -22,6 +22,7 @@ const RobotMind={engine:null,worker:null,busy:false,history:[],epoch:0,statusTex
  stop(){this.epoch++;this.worker?.terminate();this.worker=null;this.engine=null;this.busy=false;this.history=[];this.status('AI stopped · project guide active');},
  factual(q,options={}){
   const ru=/[а-яё]/i.test(q);
+  if(/build|prototype|assemble|конструкт|прототип|собрат|собер|мем|meme|组装|原型|迷因/i.test(q))return /[\u3400-\u9fff]/.test(q)?'Robotcyb 始于迷因，希望成为有用的现实。在 Build 中组装十个模块，包括 Jetson 概念、摄像头、LED、独立飞控与充电底座。这是教育模拟，不是已经存在的飞行机器人。':ru?'Robotcyb начинается как мем и стремится стать полезной реальностью. В разделе «Собрать» есть игра из десяти модулей: Jetson, камера, подсветка, отдельный полётный контроллер и зарядная станция. Это учебный концепт, а не готовый летающий робот.':'Robotcyb starts as a meme and aims to become a useful reality. BUILD is a ten-module game with a Jetson concept, camera, LEDs, separate flight control and a charging dock. This is an educational concept, not an existing flying robot.';
   if(/token|токен|contract|контракт|price|цена|капитал|liquidity|ликвид|代币|价格|合约|流动性/i.test(q)){
    if(/cicadafarm|цикад|ферм/i.test(q))return this.guide(q);
    if(/robotcyb|робот/i.test(q)||options.project==='robotcyb')return ru?'Токен ROBOTCYB в Solana: 8WZiguAp8NyFnwm8Z97k6sCbSRCWaW1YYXKeCTpupump. Ссылки на рынок и проверку токена находятся на robotcyb.ai. CicadaFarm — отдельный токен той же экосистемы.':'ROBOTCYB Solana contract: 8WZiguAp8NyFnwm8Z97k6sCbSRCWaW1YYXKeCTpupump. Market and security links are on robotcyb.ai. CicadaFarm has a separate token in the same ecosystem.';
@@ -33,6 +34,7 @@ const RobotMind={engine:null,worker:null,busy:false,history:[],epoch:0,statusTex
  },
  async reply(q,options={}){
   const zh=/[\u3400-\u9fff]/.test(q)||window.FarmI18n?.language==='zh-CN';
+  if(/build|prototype|assemble|конструкт|прототип|собрат|собер|мем|meme|组装|原型|迷因/i.test(q))return this.factual(zh?'组装 Robotcyb 原型':q,options);
   if(zh&&/robotcyb|机器人|生态系统/i.test(q)&&!/cicadafarm|蜂箱|蜂蜜|摄像头/i.test(q))return /token|代币|合约|价格/i.test(q)?'ROBOTCYB 的 Solana 合约：8WZiguAp8NyFnwm8Z97k6sCbSRCWaW1YYXKeCTpupump。CICADAFARM 使用另一个代币。市场链接位于代币栏目。':'Robotcyb 是连接本地 AI、开源实验与 CicadaFarm 真实农场的宇宙界面。农场位于 https://cicadafarm.pages.dev/。两个项目属于同一生态系统，但使用不同代币。';
   const fact=this.factual(q,options);if(fact)return /[\u3400-\u9fff]/.test(q)||window.FarmI18n?.language==='zh-CN'?this.guide(q):fact;
   if(!this.engine)return options.fallback||this.guide(q);

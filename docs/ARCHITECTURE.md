@@ -11,3 +11,9 @@ The original scene geometry, Oracle and its modes, support addresses, sentiment 
 - `agents/`, `data/projects.json`, `llms.txt`: static project identity and explicit capability/status limits. llms.txt is a convention, not an access-control mechanism.
 
 CicadaFarm links point to Cloudflare Pages. Repositories are marked as research, not fictitious available products. Wallets/signing are not performed by the companion.
+
+## Orbital prototype game
+
+`builder-core.js` defines ten concept modules and pure compatibility/scenario calculations; `builder.js` owns local progress, SVG assembly, mission timers and JSON concept export. `builder.css` supplies responsive styling and reduced-motion support. No physical vehicle, batteries or charging hardware are controlled. Active missions stop when the page becomes hidden. No microphone or camera permission is requested by the game.
+
+The uploaded visual reference is used unchanged, loaded lazily. Module masses, thrust assumptions, power totals and energy estimates are illustrative scenario values, not manufacturer measurements. NVIDIA's Orin Nano documentation and PX4 companion-computer architecture inform the distinction between AI computing and flight control. Real charger selection must match manufacturer battery specifications; the game does not provide mains wiring instructions.

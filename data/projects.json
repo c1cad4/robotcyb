@@ -1,1 +1,52 @@
-{"schemaVersion":1,"project":"ROBOTCYB","website":"https://robotcyb.ai/","languages":["en","ru","zh-CN"],"projects":[{"name":"Robotcyb","url":"https://robotcyb.ai/","status":"open-experiment"},{"name":"CicadaFarm","url":"https://cicadafarm.pages.dev/","status":"live-experience","catalogue":"https://cicadafarm.pages.dev/data/catalog.json"},{"name":"Cyb repositories","url":"https://github.com/c1cad4","status":"research-and-development"}],"token":{"network":"solana","mint":"8WZiguAp8NyFnwm8Z97k6sCbSRCWaW1YYXKeCTpupump"},"capabilities":{"localAI":true,"agentTransactionSigning":false},"dataQuality":{"scene":"visual-experiment","sentiment":"local-device-only","farmLocationPublished":false}}
+{
+  "schemaVersion": 1,
+  "project": "ROBOTCYB",
+  "website": "https://robotcyb.ai/",
+  "languages": [
+    "en",
+    "ru",
+    "zh-CN"
+  ],
+  "projects": [
+    {
+      "name": "Robotcyb",
+      "url": "https://robotcyb.ai/",
+      "status": "open-experiment"
+    },
+    {
+      "name": "CicadaFarm",
+      "url": "https://cicadafarm.pages.dev/",
+      "status": "live-experience",
+      "catalogue": "https://cicadafarm.pages.dev/data/catalog.json"
+    },
+    {
+      "name": "Cyb repositories",
+      "url": "https://github.com/c1cad4",
+      "status": "research-and-development"
+    }
+  ],
+  "token": {
+    "network": "solana",
+    "mint": "8WZiguAp8NyFnwm8Z97k6sCbSRCWaW1YYXKeCTpupump"
+  },
+  "capabilities": {
+    "localAI": true,
+    "agentTransactionSigning": false
+  },
+  "dataQuality": {
+    "scene": "visual-experiment",
+    "sentiment": "local-device-only",
+    "farmLocationPublished": false
+  },
+  "prototypeBuilder": {
+    "url": "https://robotcyb.ai/#build",
+    "type": "educational-simulation",
+    "modules": 10,
+    "physicalControl": false,
+    "measuredHardware": false,
+    "localProgress": true,
+    "export": "concept-json",
+    "mission": "simulated exploration, docking and charging"
+  },
+  "identity": "A meme aspiring to useful reality; physical robot is a concept, not an existing product."
+}
