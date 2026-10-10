@@ -35,3 +35,8 @@ I create **games**, **systems**, **memes**, **farms**, **communities**, **vision
 ## Экосистема cybOS
 
 [Роль проекта, команды и границы](docs/ECOSYSTEM.md) · [Карта всех компонентов](https://github.com/c1cad4/cybOS).
+
+## Shared Robotcyb / CicadaFarm experience
+The original Three.js scene, copy, token/security/social links, donation UI and Prophet/Lab/Action response sets are retained. The modern skin is additive in `assets/modern.css`; `assets/ecosystem.js` provides the reciprocal particle portal to CicadaFarm with reduced-motion support. A visible CHAT button opens the existing agent chat.
+
+Qwen2.5 0.5B warms up automatically after the page becomes ready, via WebLLM 0.2.85 and a dedicated worker. Initial downloads are approximately 300 MB and require a WebGPU-capable device. Loading status, STOP AI and RETRY AI remain accessible in chat. Both agent chat and oracle use AI when ready, passing their original mode and response examples; while loading or on failure their original responses remain available. Conversations are processed locally and are not sent to an inference server. Downloads contact jsDelivr, Hugging Face and the MLC model-library host. The two projects retain distinct token contracts.

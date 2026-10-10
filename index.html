@@ -1323,9 +1323,14 @@
 			}
 		}
 	</style>
+<link rel="stylesheet" href="assets/ecosystem.css?v=20261010-ecosystem">
+<link rel="stylesheet" href="assets/modern.css?v=20261010-ecosystem">
+<script src="assets/robot-mind.js?v=20261010-ecosystem"></script>
+<script defer src="assets/ecosystem.js?v=20261010-ecosystem"></script>
 </head>
 
 <body>
+ <header class="ecosystem-header"><a class="ecosystem-identity" href="./"><span class="identity-orbit">✧</span><span>ROBOTCYB<small>one ecosystem · two worlds</small></span></a><button class="ecosystem-chat-button" onclick="toggleEcosystemChat()" aria-label="Open Robotcyb chat">CHAT · AI</button><a class="ecosystem-portal" href="https://c1cad4.github.io/cicadafarm/?from=robotcyb" data-star-portal data-world="CICADAFARM"><span class="portal-ring">✧</span><span>CICADAFARM<small>living farm · enter portal ↗</small></span></a></header>
 	<canvas id="cyberCanvas"></canvas>
 	<div class="content">
 		<h1>ROBOTCYB</h1>
@@ -1338,7 +1343,8 @@
 			<div class="chat-title">🤖 Agent Chat</div>
 			<button class="chat-close">×</button>
 	</div>
-		<div class="chat-messages">
+		<div class="robot-ai-tools"><small data-ai-status role="status">AI warming up · ~300 MB · WebGPU required</small><button onclick="RobotMind.load()">RETRY AI</button><button onclick="RobotMind.stop()">STOP AI</button></div>
+        <div class="chat-messages">
 			<div class="message ai">Hello! I'm your agent. How can I help you today?</div>
 	</div>
 		<div class="chat-input">
@@ -1414,7 +1420,7 @@
 
 	<div class="oracle-popup">
 		<button class="oracle-close">×</button>
-		<div class="oracle-chat">
+		<div class="oracle-chat"><small data-ai-status role="status">AI warming up in the background…</small>
 			<div class="oracle-header">
 				<div class="oracle-title">🤖 RobotCyb Oracle</div>
 			</div>
@@ -1953,7 +1959,7 @@
 			this.addMessage("Greetings, seeker of truth. I am RobotCyb, your digital oracle. How may I guide you today?");
 		}
 		
-		sendMessage() {
+		async sendMessage() {
 			const message = this.input.value.trim();
 			if (!message) return;
 			
@@ -1964,7 +1970,7 @@
 			this.input.value = '';
 			
 			// Process message and get response
-			setTimeout(() => {
+			setTimeout(async () => {
 				let response;
 				
 				// Check for mode switch commands
@@ -1980,7 +1986,8 @@
 				} else {
 					// Get random response from current mode
 					const responses = this.responses[this.currentMode];
-					response = responses[Math.floor(Math.random() * responses.length)];
+					const fallback = responses[Math.floor(Math.random() * responses.length)];
+                    response = await RobotMind.reply(message,{project:'robotcyb',mode:this.currentMode,examples:responses.slice(0,3),fallback});
 				}
 				
 				this.addMessage(response);
@@ -2834,7 +2841,7 @@
 			this.container.insertBefore(modeContainer, this.messages);
 		}
 		
-		sendMessage() {
+		async sendMessage() {
 			const message = this.input.value.trim();
 			if (!message) return;
 			
@@ -2845,7 +2852,7 @@
 			this.input.value = '';
 			
 			// Process message and get response
-			setTimeout(() => {
+			setTimeout(async () => {
 				let response;
 				
 				// Check for mode switch commands
@@ -2861,7 +2868,8 @@
 				} else {
 					// Get random response from current mode
 					const responses = this.modes[this.currentMode].responses;
-					response = responses[Math.floor(Math.random() * responses.length)];
+					const fallback = responses[Math.floor(Math.random() * responses.length)];
+                    response = await RobotMind.reply(message,{project:'robotcyb',mode:this.currentMode,examples:responses.slice(0,3),fallback});
 				}
 				
 				this.addMessage(response, 'ai');
@@ -2932,6 +2940,7 @@
 	// Initialize Donation Manager
 	const donationManager = new DonationManager();
 	</script>
+<script src="assets/modern.js?v=20261010-ecosystem"></script>
 </body>
 
 </html>
