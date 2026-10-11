@@ -2945,3 +2945,5 @@ window.FarmTranslations = [
   "匹配的 LiPo 平衡充电器"
  ]
 ];
+
+window.FarmTranslations.push(["BROWSER GAME","БРАУЗЕРНАЯ ИГРА","浏览器游戏"],["From the Big Bang to ROBOTCYB. Collect light, choose your adaptations and awaken a cosmic mind.","От Большого взрыва до ROBOTCYB. Собирай свет, выбирай адаптации и пробуди космический разум.","从大爆炸到 ROBOTCYB。收集光，选择适应能力，唤醒宇宙意识。"],["Begin your evolution","Начать эволюцию","开始进化"]);
